@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="./theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/font-awesome.min.css">
+  <link href="https://alexmorozov.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CTO with CEO flavour Atom">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Alex Morozov" />
+<meta name="description" content="There are times when you want to get a single field of a single object in the database. For example, just get the headline of the blog post #1, not fetching it’s body. How do you do it in a usual way? >>> BlogPost.objects.only('headline').get(pk=1 ..." />
+<meta name="keywords" content="django, python, orm">
+<meta property="og:site_name" content="CTO with CEO flavour"/>
+<meta property="og:title" content="How to get a single object`s value with Django <span class="caps">ORM</span>"/>
+<meta property="og:description" content="There are times when you want to get a single field of a single object in the database. For example, just get the headline of the blog post #1, not fetching it’s body. How do you do it in a usual way? >>> BlogPost.objects.only('headline').get(pk=1 ..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./how-to-get-a-single-objects-value-with-django-orm.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-11-04 11:20:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="./author/alex-morozov.html">
+<meta property="article:section" content="Programming"/>
+<meta property="article:tag" content="django"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="orm"/>
+<meta property="og:image" content="/images/alex-morozov.jpg">  <title>CTO with CEO flavour &ndash; How to get a single object`s value with Django <span class="caps">ORM</span></title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="/images/alex-morozov.jpg" alt="CTO with CEO flavour" title="CTO with CEO flavour">
+      </a>
+      <h1><a href=".">CTO with CEO flavour</a></h1>
+      <p>Alex Morozov's blog</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/about.html#about">About</a></li>
+          <li><a href="./pages/contact-me.html#contact-me">Contact&nbsp;me</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://dk.linkedin.com/in/djangoengineer" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/alexmorozov" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-rss" href="https://alexmorozov.github.io/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+
+<article>
+  <header>
+    <h1 id="how-to-get-a-single-objects-value-with-django-orm">How to get a single object`s value with Django <span class="caps">ORM</span></h1>
+    <p>Posted on Ср. 04 Ноябрь 2015 in <a href="./category/programming.html">Programming</a></p>
+  </header>
+  <div>
+    <p>There are times when you want to get a single field of a single object in the
+database. For example, just get the headline of the blog post #1, not fetching
+it&#8217;s body. How do you do it in a usual&nbsp;way?</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">only</span><span class="p">(</span><span class="s">&#39;headline&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">headline</span>
+<span class="s">&#39;Hello world&#39;</span>
+
+<span class="c"># Or maybe even this way:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="s">&#39;headline&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;headline&#39;</span><span class="p">]</span>
+<span class="s">&#39;Hello world&#39;</span>
+</pre></div>
+
+
+<p>Recently I&#8217;ve stumbled upon <a href="https://code.djangoproject.com/ticket/25132#comment:3">a shorter one</a>:</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">BlogPost</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s">&#39;headline&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="s">&#39;Hello world&#39;</span>
+</pre></div>
+
+
+<p>As you can see, the trick is to chain <code>values()</code> and <code>get()</code> calls.
+You may say &#8220;It&#8217;s undocumented&#8221;. Hah, face it, it <a href="https://docs.djangoproject.com/en/dev/ref/models/querysets/#values-list">already is</a>!&nbsp;:)</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/django.html">django</a>
+      <a href="./tag/python.html">python</a>
+      <a href="./tag/orm.html">orm</a>
+    </p>
+  </div>
+<h4>What do you think about it? Share your thoughts!</h4>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'alexmorozovgithubio';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</article>
+
+    <footer>
+      <p>&copy; Alex Morozov </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69605514-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "How to get a single object`s value with Django <span class="caps">ORM</span>",
+  "headline": "How to get a single object`s value with Django <span class="caps">ORM</span>",
+  "datePublished": "2015-11-04 11:20:00+03:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Alex Morozov",
+    "url": "./author/alex-morozov.html"
+  },
+  "image": "/images/alex-morozov.jpg",
+  "url": "./how-to-get-a-single-objects-value-with-django-orm.html",
+  "description": "There are times when you want to get a single field of a single object in the database. For example, just get the headline of the blog post #1, not fetching it’s body. How do you do it in a usual way? >>> BlogPost.objects.only('headline').get(pk=1 ..."
+}
+</script></body>
+</html>

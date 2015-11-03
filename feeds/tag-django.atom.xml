@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CTO with CEO flavour</title><link href="https://alexmorozov.github.io/" rel="alternate"></link><link href="https://alexmorozov.github.io/feeds/tag-django.atom.xml" rel="self"></link><id>https://alexmorozov.github.io/</id><updated>2015-11-04T11:20:00+03:00</updated><entry><title>How to get a single object`s value with Django ORM</title><link href="https://alexmorozov.github.io/how-to-get-a-single-objects-value-with-django-orm.html" rel="alternate"></link><updated>2015-11-04T11:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:alexmorozov.github.io,2015-11-04:how-to-get-a-single-objects-value-with-django-orm.html</id><summary type="html">&lt;p&gt;There are times when you want to get a single field of a single object in the
+database. For example, just get the headline of the blog post #1, not fetching
+it&amp;#8217;s body. How do you do it in a usual&amp;nbsp;way?&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;BlogPost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;only&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;headline&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;headline&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;Hello world&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# Or maybe even this way:&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;BlogPost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;headline&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;headline&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;Hello world&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Recently I&amp;#8217;ve stumbled upon &lt;a href="https://code.djangoproject.com/ticket/25132#comment:3"&gt;a shorter one&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;BlogPost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values_list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;headline&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flat&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;Hello world&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As you can see, the trick is to chain &lt;code&gt;values()&lt;/code&gt; and &lt;code&gt;get()&lt;/code&gt; calls.
+You may say &amp;#8220;It&amp;#8217;s undocumented&amp;#8221;. Hah, face it, it &lt;a href="https://docs.djangoproject.com/en/dev/ref/models/querysets/#values-list"&gt;already is&lt;/a&gt;!&amp;nbsp;:)&lt;/p&gt;</summary><category term="django"></category><category term="python"></category><category term="orm"></category></entry><entry><title>When you shouldn’t use the Django admin</title><link href="https://alexmorozov.github.io/when-you-shouldnt-use-the-django-admin.html" rel="alternate"></link><updated>2015-11-03T10:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:alexmorozov.github.io,2015-11-03:when-you-shouldnt-use-the-django-admin.html</id><summary type="html">&lt;p&gt;In case you&amp;#8217;ve thought I detest &lt;code&gt;django.contrib.admin&lt;/code&gt; &amp;#8212; by no means.
+Actually it&amp;#8217;s one of the Django&amp;#8217;s greatest features, I really love it. In most&amp;nbsp;cases.&lt;/p&gt;
+&lt;p&gt;Here&amp;#8217;s a real life story. We&amp;#8217;ve had to quickly put up the first version of an
+intranet claim tracking system, and one of our developers was just crazy about
+the Django admin&amp;#8230; So why not, we&amp;#8217;ve got along with the stock interface as the
+primary one for our&amp;nbsp;users.&lt;/p&gt;
+&lt;p&gt;3 years after that, I know for sure: I&amp;#8217;m the person who knows all the drawbacks
+of such decision. And I want to share them with&amp;nbsp;you.&lt;/p&gt;
+&lt;p&gt;Here&amp;#8217;s my top 6 list of&amp;nbsp;problems:&lt;/p&gt;
+&lt;h3&gt;Stock templates&amp;nbsp;updates&lt;/h3&gt;
+&lt;p&gt;The worst thing is often they pass through the testing sieve. Tests pass,
+layout is broken, users complain. Upcoming 1.9 version introduces new flat
+design and I&amp;#8217;m just afraid to&amp;nbsp;upgrade.&lt;/p&gt;
+&lt;h3&gt;Unstable javascript &lt;span class="caps"&gt;API&lt;/span&gt;&lt;/h3&gt;
+&lt;p&gt;Unlike the regular Django APIs, javascript ones are not guaranteed to be
+stable. In addition, they are not so customizable - for example, you just can&amp;#8217;t
+set a popup width without overriding the whole file.  On the other hand,
+namespaced jQuery is really good. Most probably you won&amp;#8217;t have any versioning
+problems between upgrades if you use additional jQuery for your own&amp;nbsp;purposes.&lt;/p&gt;
+&lt;h3&gt;Insufficient default&amp;nbsp;permissions&lt;/h3&gt;
+&lt;p&gt;If you want to see a list of objects, Django admin gives you a convenient
+&amp;#8216;changelist&amp;#8217; view. You can tweak in a lot of ways, which is cool, but there&amp;#8217;s a
+major problem: to see a changelist, one has to have the &amp;#8216;change&amp;#8217; permission.
+While it&amp;#8217;s perfectly normal for basic sites, more complex setups often need the
+&amp;#8216;view&amp;#8217; permission, which allows to view a list of, say, tickets, while not
+allowing to edit&amp;nbsp;them.&lt;/p&gt;
+&lt;p&gt;So one is on a fence between two options: either to lose the changelist
+functionality, or to override the changelist view by copy-pasting 90% of the
+code. Bad decisions, I must&amp;nbsp;say.&lt;/p&gt;
+&lt;h3&gt;No chance of using generic&amp;nbsp;CBVs&lt;/h3&gt;
+&lt;p&gt;I imagine some day we will see the Django admin based on the generic
+class-based views. For now, if other parts of your site use CBVs for shared
+behaviour, you must have some additional glue to add this behaviour to the
+admin. You may recall context processors and middleware, but in my opinion
+they are not as handy as a class&amp;nbsp;tree.&lt;/p&gt;
+&lt;h3&gt;Monolythic&amp;nbsp;implementation&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;django.contrib.admin.options&lt;/code&gt; module is about 1 900 lines. I must say
+the most of that code is very readable and straightforward, but dude, almost 2K
+lines in one file! Reminds me of that Flask one-file web apps - you know, 10K
+lines is not the limit. For those who interested, only &lt;code&gt;django.db.models&lt;/code&gt;
+package have some larger&amp;nbsp;files.&lt;/p&gt;
+&lt;h3&gt;Fieldsets handle only the basic&amp;nbsp;cases&lt;/h3&gt;
+&lt;p&gt;As for the admin fieldsets, they&amp;#8217;re very handy when you work with relatively
+simple models. If you want to organize some kind of tabs, collapsible
+fieldsets, etc - you will have to code your own or to use custom&amp;nbsp;modules.&lt;/p&gt;
+&lt;h2&gt;So&amp;nbsp;what?&lt;/h2&gt;
+&lt;p&gt;To make sure you get me right: the above is not about how bad the Django admin
+is. It&amp;#8217;s about not putting too much expectations on the rather simple tool. So
+dont repeat our mistakes. For me, here&amp;#8217;s the&amp;nbsp;formula:&lt;/p&gt;
+&lt;p&gt;Consider to stick with Django admin if two conditions are&amp;nbsp;met:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You expose the admin to the small group of experienced users (content&amp;nbsp;managers)&lt;/li&gt;
+&lt;li&gt;Your models, relations and workflow are simple&amp;nbsp;enough.&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="django"></category><category term="python"></category><category term="admin"></category></entry></feed>
