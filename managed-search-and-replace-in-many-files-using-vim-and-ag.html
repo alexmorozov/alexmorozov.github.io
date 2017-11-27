@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="./theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/font-awesome.min.css">
+  <link href="https://morozov.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CTO with a CMO flavor Atom">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Alex Morozov" />
+<meta name="description" content="Recently I faced an interesting problem. I had to search for the redundant lines of code (about a hundred occurences), and replace some of them. The bad thing is that I couldn’t do that automatically, as each case had to be manually reviewed. So, how to automate this task, while keeping the manual control?" />
+<meta name="keywords" content="vim, ag">
+<meta property="og:site_name" content="CTO with a CMO flavor"/>
+<meta property="og:title" content="Managed search and replace in many files using Vim and ag."/>
+<meta property="og:description" content="Recently I faced an interesting problem. I had to search for the redundant lines of code (about a hundred occurences), and replace some of them. The bad thing is that I couldn’t do that automatically, as each case had to be manually reviewed. So, how to automate this task, while keeping the manual control?"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./managed-search-and-replace-in-many-files-using-vim-and-ag.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-11-16 10:20:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="./author/alex-morozov.html">
+<meta property="article:section" content="Programming"/>
+<meta property="article:tag" content="vim"/>
+<meta property="article:tag" content="ag"/>
+<meta property="og:image" content="/images/alex-morozov.jpg">  <title>Managed search and replace in many files using Vim and ag.. CTO with a CMO flavor</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="/images/alex-morozov.jpg" alt="CTO with a CMO flavor" title="CTO with a CMO flavor">
+      </a>
+      <h1><a href=".">CTO with a CMO flavor</a></h1>
+      <p>Alex Morozov's blog</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/about.html#about">About</a></li>
+          <li><a href="./pages/contact-me.html#contact-me">Contact&nbsp;me</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/djangoengineer" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-stack-overflow" href="http://stackoverflow.com/cv/django-developer" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/alexmorozov" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/alexmorozov" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-facebook" href="https://facebook.com/theveryalexmorozov" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="sc-rss" href="https://morozov.ca/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+
+<article>
+  <header>
+    <h1 id="managed-search-and-replace-in-many-files-using-vim-and-ag">Managed search and replace in many files using Vim and&nbsp;ag.</h1>
+    <p>Posted on Mon 16 November 2015 in <a href="./category/programming.html">Programming</a></p>
+  </header>
+  <div>
+    <p><img alt="Vim search and replace" src="./images/vim-logo.png" /></p>
+
+
+<p>Recently I faced an interesting problem. I had to search for the <a href="https://code.djangoproject.com/ticket/25780">redundant
+lines of code</a> (about a hundred occurences), and replace <strong>some</strong> of them.
+The bad thing is that I <em>couldn&#8217;t do that automatically</em>, as each case had to
+be manually&nbsp;reviewed.</p>
+<p>So, how to automate this task, while keeping the manual&nbsp;control?</p>
+
+
+<p>The text what I was looking for were actually two consecutive&nbsp;lines:</p>
+<pre><code>:::python
+    self.assertEqual(response.status_code, ...)
+    self.assertContains(response, ...)
+</code></pre>
+<p>Let&#8217;s fire up the <a href="https://github.com/ggreer/the_silver_searcher">ag</a> utility (a faster and feature-full fgrep&nbsp;replacement):</p>
+<pre><code>:::bash
+    user@host:~/src$ ag 'self.assertEqual\(response.status.{0,100}\s*self.assertContains' . | vi -
+</code></pre>
+<p>The trick here is that ag uses multiline matching by default, therefore
+allowing us to search for several lines at once. And we pipe the search results
+to Vim, my editor of&nbsp;choice.</p>
+<p>Now we have a Vim window with a bunch of lines&nbsp;like:</p>
+<pre><code>...
+tests/test_client/tests.py:732:        self.assertEqual(response.status_code, 200)
+tests/test_client/tests.py:733:        self.assertContains(response, 'This is a test')
+tests/test_client/tests.py:743:        self.assertEqual(response.status_code, 200)
+tests/test_client/tests.py:744:        self.assertContains(response, echoed_request_line)
+tests/admin_views/tests.py:230:        self.assertEqual(response.status_code, 200)
+tests/admin_views/tests.py:231:        self.assertContains(response, 'value="My Section"',
+...
+</code></pre>
+<p>, and we definitely need a way to easily navigate to each file (preferably in
+the split window), analyze the case and make&nbsp;changes.</p>
+<p>Vim superpowers to the rescue! Let&#8217;s make a convenient&nbsp;shortcut:</p>
+<pre><code>:nnoremap &lt;CR&gt; :vertical wincmd F&lt;CR&gt;
+</code></pre>
+<p>Simply put, we create a new mapping for the Vim&#8217;s normal (navigation) mode.
+When we hit <code>Enter</code> (or <code>&lt;CR&gt;</code>), Vim makes a vertical split and executes the
+window command <code>F</code>, which is essentially to open a file under cursor and
+navigate to the specified&nbsp;line.</p>
+<p>So we basically scroll down the search results, hit <code>Enter</code> on interesting
+ones, and have them opened for editing in a split window. Cool? You&nbsp;bet.</p>
+<p>Do you have some Vim find-n-replace tips? Share them in&nbsp;comments!</p>
+  </div>
+  <div>
+    <h4>Read on:</h4>
+    <ul>
+      <li>
+        <a href="./how-to-send-jabber-xmpp-messages-from-django.html">
+          How to send Jabber (<span class="caps">XMPP</span>) messages from&nbsp;Django
+        </a>
+      </li>
+      <li>
+        <a href="./why-you-should-use-the-django-admin-9-tips.html">
+          Why you should use the Django admin: 9&nbsp;tips
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/vim.html">vim</a>
+      <a href="./tag/ag.html">ag</a>
+    </p>
+  </div>
+  <div class="center social-share">
+    <p>Like this article? Share it with your friends!</p>
+    <div class="addthis_native_toolbox"></div>
+    <div class="addthis_sharing_toolbox"></div>
+  </div>
+<h4>What do you think about it? Share your thoughts!</h4>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'alexmorozovgithubio';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</article>
+
+    <footer>
+      <p>&copy; Alex Morozov </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69605514-1', 'auto');
+  ga('send', 'pageview');
+</script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-563ca099f23dfb64" async="async"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "Managed search and replace in many files using Vim and&nbsp;ag.",
+  "headline": "Managed search and replace in many files using Vim and&nbsp;ag.",
+  "datePublished": "2015-11-16 10:20:00+03:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Alex Morozov",
+    "url": "./author/alex-morozov.html"
+  },
+  "image": "/images/alex-morozov.jpg",
+  "url": "./managed-search-and-replace-in-many-files-using-vim-and-ag.html",
+  "description": "Recently I faced an interesting problem. I had to search for the redundant lines of code (about a hundred occurences), and replace some of them. The bad thing is that I couldn’t do that automatically, as each case had to be manually reviewed. So, how to automate this task, while keeping the manual control?"
+}
+</script></body>
+</html>

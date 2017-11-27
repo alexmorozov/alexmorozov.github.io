@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="./theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/font-awesome.min.css">
+  <link href="https://morozov.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CTO with a CMO flavor Atom">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Alex Morozov" />
+<meta name="description" content="This writing is inspired by a comment on Reddit concerning my recent post: “The problem is that everyone I speak to seems to think the opposite - that the admin is super-limited, inflexible and hard to customize.” — andybak on Reddit I’m about to break this prejudice right now. The Django admin is a really brilliant piece of software, which can significantly speed up your development. Here are some tips about the Django admin, which I’ve found to be quite useful." />
+<meta name="keywords" content="django, python, admin">
+<meta property="og:site_name" content="CTO with a CMO flavor"/>
+<meta property="og:title" content="Why you should use the Django admin: 9 tips"/>
+<meta property="og:description" content="This writing is inspired by a comment on Reddit concerning my recent post: “The problem is that everyone I speak to seems to think the opposite - that the admin is super-limited, inflexible and hard to customize.” — andybak on Reddit I’m about to break this prejudice right now. The Django admin is a really brilliant piece of software, which can significantly speed up your development. Here are some tips about the Django admin, which I’ve found to be quite useful."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./why-you-should-use-the-django-admin-9-tips.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-12-09 10:20:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="./author/alex-morozov.html">
+<meta property="article:section" content="Programming"/>
+<meta property="article:tag" content="django"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="admin"/>
+<meta property="og:image" content="/images/alex-morozov.jpg">  <title>Why you should use the Django admin: 9 tips. CTO with a CMO flavor</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="/images/alex-morozov.jpg" alt="CTO with a CMO flavor" title="CTO with a CMO flavor">
+      </a>
+      <h1><a href=".">CTO with a CMO flavor</a></h1>
+      <p>Alex Morozov's blog</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/about.html#about">About</a></li>
+          <li><a href="./pages/contact-me.html#contact-me">Contact&nbsp;me</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/djangoengineer" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-stack-overflow" href="http://stackoverflow.com/cv/django-developer" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/alexmorozov" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/alexmorozov" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-facebook" href="https://facebook.com/theveryalexmorozov" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="sc-rss" href="https://morozov.ca/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+
+<article>
+  <header>
+    <h1 id="why-you-should-use-the-django-admin-9-tips">Why you should use the Django admin: 9&nbsp;tips</h1>
+    <p>Posted on Wed 09 December 2015 in <a href="./category/programming.html">Programming</a></p>
+  </header>
+  <div>
+    <p><img alt="Django admin is, you know, magic" src="./images/django-pony.png" /></p>
+
+
+<p>This writing is inspired by a comment on Reddit concerning my <a href="./when-you-shouldnt-use-the-django-admin.html">recent post</a>:</p>
+<blockquote>
+<p><span class="dquo">&#8220;</span>The problem is that everyone I speak to seems to think the opposite - that
+the admin is super-limited, inflexible and hard to&nbsp;customize.&#8221;</p>
+<p>&#8212; <cite><a href="https://www.reddit.com/r/django/comments/3sfg0x/when_you_shouldnt_use_the_django_admin/">andybak</a> on Reddit</cite></p>
+</blockquote>
+<p>I&#8217;m about to break this prejudice right now. The Django admin is a really
+brilliant piece of software, which can significantly speed up your&nbsp;development.</p>
+<p>Here are some tips about the Django admin, which I&#8217;ve found to be quite&nbsp;useful.</p>
+
+
+<p><small>
+(A bit of terminology for those of us who isn&#8217;t that familiar with the Django&nbsp;admin)</p>
+<blockquote>
+<p><strong>Changeform</strong> is the page where you can edit the&nbsp;object.</p>
+<p><strong>Changelist</strong> is the page which lists all objects of specific kind. You can filter and execute actions on the subset of objects. Clicking on the object in the changelist usually gets you to that object&#8217;s changeform.
+</small></p>
+</blockquote>
+<p>To make the tips more practical, let&#8217;s try to solve some almost-real-life
+problems. So say we have a simple site where visitors post pictures of cute
+animals and leave comments on them. Should be quite popular, shouldn&#8217;t&nbsp;it?</p>
+<h3 id="tip-1-the-django-admin-is-not-just-for-django-sites">Tip #1: The Django admin is not just for Django&nbsp;sites</h3>
+<p>While the admin interface plays very well with the rest of Django framework,
+it&#8217;s very easy to use it with, say, the legacy database or the site which has
+an awkward admin interface. And quite often it&#8217;s the best way of testing if
+Django will suit your&nbsp;needs.</p>
+<p>All you need is&nbsp;to:</p>
+<ol>
+<li>Create a new application in your Django project and make sure you&#8217;ve
+   configured the connection to the legacy <span class="caps">DB</span> in your <code>DATABASES</code> setting.</li>
+<li>Define your data tables as Django models. A pretty useful <code>manage.py
+   inspectdb</code> command does exactly what its name implies: inpects the existing
+   database and prints out the auto-generated Django&nbsp;models.</li>
+<li>Create an <code>admin.py</code> file and put there, er, the admin stuff. More on this
+   in a&nbsp;moment.</li>
+</ol>
+<p>Speaking of our animals&#8217; site, it is written in <a href="https://en.wikipedia.org/wiki/Brainfuck">Brainf*ck</a>, so the admin
+interface looks like&#8230; You know, not that good.  To fix it, we resembled
+the database structure with several Django models and put together a simple
+admin&nbsp;interface:</p>
+<pre><code>:::python
+# models.py
+class Picture(models.Model):
+    DOG = 1
+    CAT = 2
+    ANIMAL_KIND_CHOICES = (
+        (DOG, 'dog'),
+        (CAT, 'cat'),
+    )
+
+    title = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, related_name='pictures')
+    animal_kind = models.IntegerField(choices=ANIMAL_KIND_CHOICES)
+    photo = models.ImageField(upload_to='animals')
+    is_promoted = models.BooleanField(default=False)
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(Author, related_name='comments')
+    picture = models.ForeignKey(Picture, related_name='comments')
+    comment = models.TextField()
+    editors_note = models.TextField()
+
+# admin.py
+class PictureAdmin(admin.ModelAdmin):
+    list_display_fields = ('photo', 'animal_kind', 'author', 'is_promoted', )
+
+
+class AuthorAdmin(admin.ModelAdmin):
+    list_display_fields = ('name', 'email', )
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display_fields = ('picture', 'author', )
+</code></pre>
+<h3 id="tip-2-filter-your-data-the-way-you-like">Tip #2: Filter your data the way you&nbsp;like</h3>
+<p>A lot of people use the Django admin&#8217;s ability to filter on specific fields.
+You know, put a field name to the <code>list_filter</code> attribute and here we go. But it&#8217;s
+also extremely easy to create a custom&nbsp;filters!</p>
+<p>Suppose eventually you decide to promote all the authors having 100+ posts.
+But how do we distinguish them? Let&#8217;s create a filter and add it to the our&nbsp;changelist.</p>
+<pre><code>:::python
+class ProductiveAuthorsFilter(admin.SimpleListFilter):
+    parameter_name = 'is_productive'
+    title = 'Productive author'
+    YES, NO = 1, 0
+
+    # Number of comments for an author to be considered a productive one
+    THRESHOLD = 100
+
+    def lookups(self, request, model_admin):
+        return (
+            (self.YES, 'yes'),
+            (self.NO, 'no'),
+        )
+
+    def queryset(self, request, queryset):
+        qs = queryset.annotate(Count('comments'))
+
+        # Note the syntax. This way we avoid touching the queryset if our
+        # filter is not used at all.
+        if self.value() == self.YES:
+            return qs.filter(comments__count__gte=self.THRESHOLD)
+        if self.value() == self.NO:
+            return qs.filter(comments__count__lt=self.THRESHOLD)
+
+        return queryset
+
+
+class PictureAdmin(admin.ModelAdmin):
+    list_filters = [..., ProductiveAuthorsFilter]
+</code></pre>
+<p>Now we can easily select our core authors. How do we actually promote them then?
+Let&#8217;s move on to the next&nbsp;section.</p>
+<h3 id="tip-3-put-the-common-stuff-to-actions">Tip #3: Put the common stuff to&nbsp;&#8216;actions&#8217;</h3>
+<p>This one is a true godsend for content managers. Remember the &#8216;actions&#8217; toolbox
+at the top of each model&#8217;s list? It would be very handy if we select some
+pictures and make them &#8220;promoted&#8221; with a single click, right? Let&#8217;s
+implement&nbsp;it:</p>
+<pre><code>:::python
+class PictureAdmin(admin.ModelAdmin):
+    actions = ['promote', ]
+
+    def promote(self, request, queryset):
+        queryset.update(is_promoted=True)
+        self.message_user(request, 'The posts are promoted')
+    promote.short_description = 'Promote the pictures'
+</code></pre>
+<p>And that&#8217;s it! No longer opening each form one by one! Plus, it&#8217;s quite easy
+to extend our action further, adding, for example, an intermediate form. Django
+docs have an <a href="https://docs.djangoproject.com/en/1.8/ref/contrib/admin/actions/#actions-that-provide-intermediate-pages">excellent section</a> on&nbsp;this.</p>
+<h3 id="tip-4-search-on-all-fields-you-need">Tip #4: Search on all fields you&nbsp;need</h3>
+<p>Okay, filters are cool but let&#8217;s focus a bit on the search facility. In almost all
+installations I&#8217;ve seen the search box is used for searching across one model&#8217;s
+fields. But the Django search really shines when you realize it can handle the
+relationships. So assume we want it to search in pictures&#8217; titles, authors&#8217;
+names and comments&#8217; texts. How do we achieve&nbsp;that?</p>
+<pre><code>:::python
+class PictureAdmin(admin.ModelAdmin):
+    search_fields = ('title', 'author__name', 'comments__text', )
+</code></pre>
+<p>Just don&#8217;t forget to add some full-text indices, if your database is big&nbsp;enough.</p>
+<h3 id="tip-5-view-an-objects-page-an-easy-way">Tip #5: View an object&#8217;s page – an easy&nbsp;way</h3>
+<p>A very common need is to view the object&#8217;s public page on site. By default you
+have to browse to the object&#8217;s form and then click on the &#8220;View on site&#8221; button.
+That&#8217;s how to make it a bit&nbsp;easier:</p>
+<pre><code>:::python
+class PictureAdmin(admin.ModelAdmin):
+    list_fields = [..., 'object_link']
+
+    def object_link(self, item):
+        url = item.get_absolute_url()
+        return format_html(u'&lt;a href="{url}"&gt;open&lt;/a&gt;', url=url)
+    object_link.short_description = 'View on site'
+</code></pre>
+<p>This snippet adds a &#8220;View on site&#8221; link to each object in the list. Here we
+assume you&#8217;ve already implemented the <code>get_absolute_url()</code> method on your
+model. If not - go ahead and do it, it&#8217;ll save you much time. And you&#8217;ll
+probably want to move this snippet to a mixin, or a shared base admin&nbsp;class.</p>
+<h3 id="tip-6-edit-fields-in-place-right-on-the-list-page">Tip #6: Edit fields in-place right on the list&nbsp;page</h3>
+<p>Suppose we need to put an editor&#8217;s note to each comment. And naturally enough,
+we don&#8217;t want to open each comment&#8217;s changeform. To implement this, adjust your ModelAdmin a&nbsp;bit:</p>
+<pre><code>:::python
+class CommentAdmin(admin.ModelAdmin):
+    list_display_fields = ('picture', 'author', 'editors_note', )
+    list_editable = ('editors_note', )
+</code></pre>
+<p>That&#8217;s literally all. Now you can open a comments list, filter it down
+to your needs, and start writing notes&nbsp;away.</p>
+<h3 id="tip-7-customize-your-totals-with-the-data-you-really-need">Tip #7: Customize your totals with the data you really&nbsp;need</h3>
+<p>There&#8217;s a totals line at the bottom of each changelist. Imagine we&#8217;d like to
+separate the counts of dogs&#8217; and cats&#8217; pics. This functionality will take a bit
+more of code: we have to override the changelist itself, as well as the html
+template (more on <a href="https://docs.djangoproject.com/en/1.9/ref/contrib/admin/#overriding-admin-templates">template overriding</a>).</p>
+<pre><code>:::python
+from django.contrib.admin.views.main import ChangeList
+
+class PicturesChangeList(admin.ChangeList):
+    def get_results(self, request):
+        super(PicturesChangeList, self).get_results(request)
+        totals = self.result_list.aggregate(
+            dogs_count=Sum(Case(When(animal_kind=Picture.DOG, then=1),
+                           output_field=IntegerField())),
+            cats_count=Sum(Case(When(animal_kind=Picture.CAT, then=1),
+                           output_field=IntegerField())))
+        self.totals = totals
+
+
+class PictureAdmin(admin.ModelAdmin):
+    def get_changelist(self, request):
+        return PicturesChangeList
+</code></pre>
+<p>and the&nbsp;template:</p>
+<pre><code>:::html
+{% extends 'admin/change_list.html' %}
+{% block result_list %}
+    {{ block.super }}
+    &lt;p&gt;
+        There are
+        &lt;strong&gt;
+            {{ cl.totals.dogs_count|default:'none' }} dogs and
+            {{ cl.totals.cats_count|default:'none' }} cats
+        &lt;/strong&gt;
+        on this page.
+    &lt;/p&gt;
+{% endblock %}
+</code></pre>
+<h3 id="tip-8-readonly-admin-interface-for-some-of-us">Tip #8: Readonly admin interface for some of&nbsp;us</h3>
+<p>Guess what? Your grandma wants to take a look at all these cuties, and she
+loves the Django admin interface she watched over your shoulder. But you&#8217;re sure she
+will ruin the whole site if there is a single button. Okay, let&#8217;s put together
+the grandma-proof&trade; readonly admin interface (who&#8217;s said&nbsp;&#8220;databrowse&#8221;?):</p>
+<pre><code>:::python
+class GrandmaProofAdmin(admin.ModelAdmin):
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.username == 'granny':
+            return [f.name for f in self.model._meta.fields]
+        else:
+            return super(GrandmaProofAdmin, self).get_readonly_fields(request, obj)
+
+
+class PictureAdmin(GrandmaProofAdmin):
+    ...
+</code></pre>
+<p>Now you can safely grant your granny the <code>change pictures</code> permission in order
+to see the pictures list. Note that this solution surely will not suit any
+serious usage - you&#8217;ll need to handle <a href="https://gist.github.com/aaugustin/1388243">some more cases</a>.</p>
+<h3 id="tip-9-per-object-custom-actions">Tip #9: Per-object custom&nbsp;actions</h3>
+<p>Sometimes you want to execute a certain action on only one object. The
+&#8216;actions&#8217; toolbox surely makes it possible, but ticking the object, selecting
+the action, clicking on a button&#8230; There should be a more convenient way,
+shouldn&#8217;t it? Let&#8217;s reduce all that stuff to actually clicking on a&nbsp;button.</p>
+<p>This time we will be implementing another granny&#8217;s big idea. She&#8217;d like to send
+an email to some authors, showing all her&nbsp;love.</p>
+<pre><code>:::python
+class PictureAdmin(admin.ModelAdmin):
+    list_fields = (..., 'mail_link', )
+
+    def mail_link(self, obj):
+        dest = reverse('admin:myapp_pictures_mail_author',
+                       kwargs={'pk': obj.pk})
+        return format_html('&lt;a href="{url}"&gt;{title}&lt;/a&gt;',
+                           url=dest, title='send mail')
+    mail_link.short_description = 'Show some love'
+    mail_link.allow_tags = True
+
+    def get_urls(self):
+        urls = [
+            url('^(?P&lt;pk&gt;\d+)/sendaletter/?$',
+                self.admin_site.admin_view(self.mail_view),
+                name='myapp_pictures_mail_author'),
+        ]
+        return urls + super(PictureAdmin, self).get_urls()
+
+    def mail_view(self, request, *args, **kwargs):
+        obj = get_object_or_404(Picture, pk=kwargs['pk'])
+        send_mail('Feel the granny\'s love', 'Hey, she loves your pet!',
+                  'granny@yoursite.com', [obj.author.email])
+        self.message_user(request, 'The letter is on its way')
+        return redirect(reverse('admin:myapp_picture_changelist'))
+</code></pre>
+<p>Hope now she&#8217;s happy. A link has appeared along each object&#8217;s fields, allowing
+her to send a mail by simply clicking&nbsp;it.</p>
+<h3 id="bonus-tip-reduce-queries-by-adding-a-single-line-to-your-admin">Bonus Tip: Reduce queries by adding a single line to your&nbsp;admin</h3>
+<p>The most common tip about the Django admin (and Django in general) is
+(worthily) the <code>select_related</code> stuff. Ok, ok, you all know it. Preload the
+related objects by passing their names to the <code>list_select_related</code> ModelAdmin
+attribute.  But did you know you haven&#8217;t to specify all your relations? Just
+set it to <code>True</code>, and Django will automatically preload foreign&nbsp;objects:</p>
+<pre><code>:::python
+class PictureAdmin(admin.ModelAdmin):
+    list_select_related = True
+</code></pre>
+<p>So guys, that&#8217;s it, hope you&#8217;ve liked it. Got any cool tips? Go ahead and share
+your favorite ones in&nbsp;comments!</p>
+<!&#8212;-
+
+custom actions (incl. dynamic)
+custom links/buttons
+ordering
+    order comments?
+list_display_links
+some tips about forms? Fieldsets?
+somefield__afieldsmethod
+Override another module&#8217;s admin
+
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+leave a comment in reddit thread when done
+
+&#8212;->
+  </div>
+  <div>
+    <h4>Read on:</h4>
+    <ul>
+      <li>
+        <a href="./managed-search-and-replace-in-many-files-using-vim-and-ag.html">
+          Managed search and replace in many files using Vim and&nbsp;ag.
+        </a>
+      </li>
+      <li>
+        <a href="./django-pdf-msword-excel-templates.html">
+          Django: how to create <span class="caps">PDF</span>, <span class="caps">MS</span> Word and Excel documents from&nbsp;templates
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/django.html">django</a>
+      <a href="./tag/python.html">python</a>
+      <a href="./tag/admin.html">admin</a>
+    </p>
+  </div>
+  <div class="center social-share">
+    <p>Like this article? Share it with your friends!</p>
+    <div class="addthis_native_toolbox"></div>
+    <div class="addthis_sharing_toolbox"></div>
+  </div>
+<h4>What do you think about it? Share your thoughts!</h4>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'alexmorozovgithubio';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</article>
+
+    <footer>
+      <p>&copy; Alex Morozov </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69605514-1', 'auto');
+  ga('send', 'pageview');
+</script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-563ca099f23dfb64" async="async"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "Why you should use the Django admin: 9&nbsp;tips",
+  "headline": "Why you should use the Django admin: 9&nbsp;tips",
+  "datePublished": "2015-12-09 10:20:00+03:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Alex Morozov",
+    "url": "./author/alex-morozov.html"
+  },
+  "image": "/images/alex-morozov.jpg",
+  "url": "./why-you-should-use-the-django-admin-9-tips.html",
+  "description": "This writing is inspired by a comment on Reddit concerning my recent post: “The problem is that everyone I speak to seems to think the opposite - that the admin is super-limited, inflexible and hard to customize.” — andybak on Reddit I’m about to break this prejudice right now. The Django admin is a really brilliant piece of software, which can significantly speed up your development. Here are some tips about the Django admin, which I’ve found to be quite useful."
+}
+</script></body>
+</html>

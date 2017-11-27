@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CTO with a CMO flavor - vim</title><link href="https://morozov.ca/" rel="alternate"></link><link href="https://morozov.ca/feeds/tag-vim.atom.xml" rel="self"></link><id>https://morozov.ca/</id><updated>2015-11-16T10:20:00+03:00</updated><entry><title>Managed search and replace in many files using Vim and ag.</title><link href="https://morozov.ca/managed-search-and-replace-in-many-files-using-vim-and-ag.html" rel="alternate"></link><published>2015-11-16T10:20:00+03:00</published><updated>2015-11-16T10:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2015-11-16:managed-search-and-replace-in-many-files-using-vim-and-ag.html</id><summary type="html">
+
+&lt;p&gt;Recently I faced an interesting problem. I had to search for the &lt;a href="https://code.djangoproject.com/ticket/25780"&gt;redundant
+lines of code&lt;/a&gt; (about a hundred occurences), and replace &lt;strong&gt;some&lt;/strong&gt; of them.
+The bad thing is that I &lt;em&gt;couldn&amp;#8217;t do that automatically&lt;/em&gt;, as each case had to
+be manually&amp;nbsp;reviewed.&lt;/p&gt;
+&lt;p&gt;So, how to automate this task, while keeping the manual&amp;nbsp;control?&lt;/p&gt;
+</summary><category term="vim"></category><category term="ag"></category></entry></feed>

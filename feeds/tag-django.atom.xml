@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CTO with a CMO flavor - django</title><link href="https://morozov.ca/" rel="alternate"></link><link href="https://morozov.ca/feeds/tag-django.atom.xml" rel="self"></link><id>https://morozov.ca/</id><updated>2016-07-11T12:20:00+03:00</updated><entry><title>Django: how to create PDF, MS Word and Excel documents from templates</title><link href="https://morozov.ca/django-pdf-msword-excel-templates.html" rel="alternate"></link><published>2016-07-11T12:20:00+03:00</published><updated>2016-07-11T12:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2016-07-11:django-pdf-msword-excel-templates.html</id><summary type="html">
+
+&lt;p&gt;If you&amp;#8217;re building a Django system that implies serving some kind of documents
+like reports or bills, chances are you want to provide docs in various formats
+from &lt;span class="caps"&gt;PDF&lt;/span&gt; to &lt;span class="caps"&gt;MS&lt;/span&gt; Word to &lt;span class="caps"&gt;HTML&lt;/span&gt;. But how to implement this without resorting to
+numerous templates and packages for each document&amp;nbsp;type?&lt;/p&gt;
+</summary><category term="django"></category><category term="python"></category><category term="libreoffice"></category><category term="pylokit"></category><category term="templates"></category><category term="documents"></category></entry><entry><title>Why you should use the Django admin: 9 tips</title><link href="https://morozov.ca/why-you-should-use-the-django-admin-9-tips.html" rel="alternate"></link><published>2015-12-09T10:20:00+03:00</published><updated>2015-12-09T10:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2015-12-09:why-you-should-use-the-django-admin-9-tips.html</id><summary type="html">
+
+&lt;p&gt;This writing is inspired by a comment on Reddit concerning my &lt;a href="https://morozov.ca/when-you-shouldnt-use-the-django-admin.html"&gt;recent post&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span class="dquo"&gt;&amp;#8220;&lt;/span&gt;The problem is that everyone I speak to seems to think the opposite - that
+the admin is super-limited, inflexible and hard to&amp;nbsp;customize.&amp;#8221;&lt;/p&gt;
+&lt;p&gt;&amp;#8212; &lt;cite&gt;&lt;a href="https://www.reddit.com/r/django/comments/3sfg0x/when_you_shouldnt_use_the_django_admin/"&gt;andybak&lt;/a&gt; on Reddit&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I&amp;#8217;m about to break this prejudice right now. The Django admin is a really
+brilliant piece of software, which can significantly speed up your&amp;nbsp;development.&lt;/p&gt;
+&lt;p&gt;Here are some tips about the Django admin, which I&amp;#8217;ve found to be quite&amp;nbsp;useful.&lt;/p&gt;
+</summary><category term="django"></category><category term="python"></category><category term="admin"></category></entry><entry><title>How to send Jabber (XMPP) messages from Django</title><link href="https://morozov.ca/how-to-send-jabber-xmpp-messages-from-django.html" rel="alternate"></link><published>2015-11-11T12:20:00+03:00</published><updated>2015-11-11T12:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2015-11-11:how-to-send-jabber-xmpp-messages-from-django.html</id><summary type="html">
+
+&lt;p&gt;Did you ever want to have a simple Django notification bot? An intranet one
+which just sends you (or someone you tell it to) Jabber messages when certain
+events occur? So did I. Please, welcome: &lt;strong&gt;&lt;a href="https://github.com/alexmorozov/django-jabber"&gt;django-jabber&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+</summary><category term="django"></category><category term="python"></category><category term="jabber"></category><category term="xmpp"></category></entry><entry><title>Tip: How to get a single object`s value with Django ORM</title><link href="https://morozov.ca/tip-how-to-get-a-single-objects-value-with-django-orm.html" rel="alternate"></link><published>2015-11-11T11:20:00+03:00</published><updated>2015-11-11T11:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2015-11-11:tip-how-to-get-a-single-objects-value-with-django-orm.html</id><summary type="html">&lt;p&gt;There are times when you want to get a single field of a single object in the
+database. For example, just get the headline of the blog post #1, not fetching
+it&amp;#8217;s body. How do you do it in a usual&amp;nbsp;way?&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::python
+&amp;gt;&amp;gt;&amp;gt; BlogPost.objects.only('headline').get(pk=1).headline
+'Hello world'
+
+# Or maybe even this way:
+&amp;gt;&amp;gt;&amp;gt; BlogPost.objects.values('headline').filter(pk=1)[0]['headline']
+'Hello world'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Recently I&amp;#8217;ve stumbled upon &lt;a href="https://code.djangoproject.com/ticket/25132#comment:3"&gt;a shorter one&lt;/a&gt;:&lt;/p&gt;
+</summary><category term="django"></category><category term="python"></category><category term="orm"></category></entry><entry><title>When you shouldn’t use the Django admin</title><link href="https://morozov.ca/when-you-shouldnt-use-the-django-admin.html" rel="alternate"></link><published>2015-11-11T10:20:00+03:00</published><updated>2015-11-11T10:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2015-11-11:when-you-shouldnt-use-the-django-admin.html</id><summary type="html">&lt;p&gt;In case you&amp;#8217;ve thought I detest &lt;code&gt;django.contrib.admin&lt;/code&gt; &amp;#8212; by no means.
+Actually it&amp;#8217;s one of the Django&amp;#8217;s greatest features, I really love it. In most&amp;nbsp;cases.&lt;/p&gt;
+&lt;p&gt;Here&amp;#8217;s a real life story. We&amp;#8217;ve had to quickly put up the first version of an
+intranet claim tracking system, and one of our developers was just crazy about
+the Django admin&amp;#8230; So why not, we&amp;#8217;ve got along with the stock interface as the
+primary one for …&lt;/p&gt;</summary><category term="django"></category><category term="python"></category><category term="admin"></category></entry></feed>

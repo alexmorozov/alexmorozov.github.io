@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="../theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/css/font-awesome.min.css">
+  <link href="https://morozov.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CTO with a CMO flavor Atom">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Alex Morozov" />
+<meta name="description" content="So you’ve put together a scrum-based workflow in your company. From now on you’ll deliver projects on time, and the boss will praise you every time he sees you. Look, he’s just turned up. What is he going to say? Words of gratitude? Oh wait. What does he mean by ‘put things on hold for a bit and switch to a super-urgent project’? But we’ve just set up a board… AND STICKERS! Ideal companies. Management always …" />
+<meta name="keywords" content="trello, kanban, scrum, project management">
+<meta property="og:site_name" content="CTO with a CMO flavor"/>
+<meta property="og:title" content="Manage software projects with Trello - a “Russian Doll” way"/>
+<meta property="og:description" content="So you’ve put together a scrum-based workflow in your company. From now on you’ll deliver projects on time, and the boss will praise you every time he sees you. Look, he’s just turned up. What is he going to say? Words of gratitude? Oh wait. What does he mean by ‘put things on hold for a bit and switch to a super-urgent project’? But we’ve just set up a board… AND STICKERS! Ideal companies. Management always …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="../drafts/manage-software-projects-with-trello-a-russian-doll-way.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-11-10 10:20:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../author/alex-morozov.html">
+<meta property="article:section" content="Project management"/>
+<meta property="article:tag" content="trello"/>
+<meta property="article:tag" content="kanban"/>
+<meta property="article:tag" content="scrum"/>
+<meta property="article:tag" content="project management"/>
+<meta property="og:image" content="/images/alex-morozov.jpg">  <title>Manage software projects with Trello - a “Russian Doll” way. CTO with a CMO flavor</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="..">
+        <img src="/images/alex-morozov.jpg" alt="CTO with a CMO flavor" title="CTO with a CMO flavor">
+      </a>
+      <h1><a href="..">CTO with a CMO flavor</a></h1>
+      <p>Alex Morozov's blog</p>
+      <nav>
+        <ul class="list">
+          <li><a href="../pages/about.html#about">About</a></li>
+          <li><a href="../pages/contact-me.html#contact-me">Contact&nbsp;me</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/djangoengineer" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-stack-overflow" href="http://stackoverflow.com/cv/django-developer" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/alexmorozov" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/alexmorozov" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-facebook" href="https://facebook.com/theveryalexmorozov" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="sc-rss" href="https://morozov.ca/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+
+<article>
+  <header>
+    <h1 id="manage-software-projects-with-trello-a-russian-doll-way">Manage software projects with Trello - a &#8220;Russian Doll&#8221;&nbsp;way</h1>
+    <p>Posted on Tue 10 November 2015 in <a href="../category/project-management.html">Project management</a></p>
+  </header>
+  <div>
+    <p><img alt="I can remember that smell of wood and paint..." src="../images/russian-doll-project-management-trello.jpg" /></p>
+<p>So you&#8217;ve put together a scrum-based workflow in your company. From now on
+you&#8217;ll deliver projects on time, and the boss will praise you every time he
+sees you. Look, he&#8217;s just turned up. What is he going to say? Words of
+gratitude? Oh wait. What does he mean by &#8216;put things on hold for a bit and
+switch to a super-urgent project&#8217;? But we&#8217;ve just set up a board&#8230; <span class="caps">AND</span> <span class="caps">STICKERS</span>!</p>
+<p>Ideal companies. Management always interferes. But that&#8217;s good, it minimizes the chances of you delivering the dead-born crap.
+Sticking to a plan isn&#8217;t worth a damn if the objective itself is obsolete.
+Pivoting - startups&#8217; buzzword. Change directions swiftly and recover fast if you&#8217;re&nbsp;screwed.</p>
+<p>Problems
+usually you end up turning off 80% of features in an issue tracker.
+How to address&nbsp;them</p>
+<p>why&nbsp;trello</p>
+<p>board/list/card can change meaning from board to&nbsp;board.</p>
+<p>If you&#8217;re&nbsp;working</p>
+<p>What&#8217;s wrong with common&nbsp;trackers?</p>
+<p>so you try to fit pegs of all shapes into square holes.
+bc you think the project is done when all the project&#8217;s tasks are done
+it doesn&#8217;t work that way
+constantly changing&nbsp;things</p>
+<p><span class="caps">JIRA</span>, Trac, you name&nbsp;it.</p>
+<h3 id="heroic-plans-board"><span class="dquo">&#8220;</span>Heroic plans&#8221;&nbsp;board</h3>
+<p>time-based planning
+heroic plans
+    calendar - by&nbsp;quarter</p>
+<h3 id="projects-board">Project&#8217;s&nbsp;board</h3>
+<p>scrum
+    backlog
+    points&nbsp;iterations</p>
+<h3 id="developers-board">Developer&#8217;s&nbsp;board</h3>
+<p>Story is a&nbsp;list</p>
+<p>developer
+    kanban
+    current story&nbsp;churn</p>
+<p>when it&#8217;s ready from the developer&#8217;s point of view, it might not be from the cto&#8217;s point. and <span class="caps">VICE</span> <span class="caps">VERSA</span>!</p>
+  </div>
+  <div>
+    <h4>Read on:</h4>
+    <ul>
+    </ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../tag/trello.html">trello</a>
+      <a href="../tag/kanban.html">kanban</a>
+      <a href="../tag/scrum.html">scrum</a>
+      <a href="../tag/project-management.html">project management</a>
+    </p>
+  </div>
+  <div class="center social-share">
+    <p>Like this article? Share it with your friends!</p>
+    <div class="addthis_native_toolbox"></div>
+    <div class="addthis_sharing_toolbox"></div>
+  </div>
+<h4>What do you think about it? Share your thoughts!</h4>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'alexmorozovgithubio';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</article>
+
+    <footer>
+      <p>&copy; Alex Morozov </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69605514-1', 'auto');
+  ga('send', 'pageview');
+</script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-563ca099f23dfb64" async="async"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "Manage software projects with Trello - a &#8220;Russian Doll&#8221;&nbsp;way",
+  "headline": "Manage software projects with Trello - a &#8220;Russian Doll&#8221;&nbsp;way",
+  "datePublished": "2015-11-10 10:20:00+03:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Alex Morozov",
+    "url": "../author/alex-morozov.html"
+  },
+  "image": "/images/alex-morozov.jpg",
+  "url": "../drafts/manage-software-projects-with-trello-a-russian-doll-way.html",
+  "description": "So you’ve put together a scrum-based workflow in your company. From now on you’ll deliver projects on time, and the boss will praise you every time he sees you. Look, he’s just turned up. What is he going to say? Words of gratitude? Oh wait. What does he mean by ‘put things on hold for a bit and switch to a super-urgent project’? But we’ve just set up a board… AND STICKERS! Ideal companies. Management always …"
+}
+</script></body>
+</html>

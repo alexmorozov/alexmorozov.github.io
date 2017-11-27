@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="./theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/font-awesome.min.css">
+  <link href="https://morozov.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CTO with a CMO flavor Atom">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Alex Morozov" />
+<meta name="description" content="Did you ever want to have a simple Django notification bot? An intranet one which just sends you (or someone you tell it to) Jabber messages when certain events occur? So did I. Please, welcome: django-jabber." />
+<meta name="keywords" content="django, python, jabber, xmpp">
+<meta property="og:site_name" content="CTO with a CMO flavor"/>
+<meta property="og:title" content="How to send Jabber (XMPP) messages from Django"/>
+<meta property="og:description" content="Did you ever want to have a simple Django notification bot? An intranet one which just sends you (or someone you tell it to) Jabber messages when certain events occur? So did I. Please, welcome: django-jabber."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./how-to-send-jabber-xmpp-messages-from-django.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-11-11 12:20:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="./author/alex-morozov.html">
+<meta property="article:section" content="Programming"/>
+<meta property="article:tag" content="django"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="jabber"/>
+<meta property="article:tag" content="xmpp"/>
+<meta property="og:image" content="/images/alex-morozov.jpg">  <title>How to send Jabber (XMPP) messages from Django. CTO with a CMO flavor</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="/images/alex-morozov.jpg" alt="CTO with a CMO flavor" title="CTO with a CMO flavor">
+      </a>
+      <h1><a href=".">CTO with a CMO flavor</a></h1>
+      <p>Alex Morozov's blog</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/about.html#about">About</a></li>
+          <li><a href="./pages/contact-me.html#contact-me">Contact&nbsp;me</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/djangoengineer" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-stack-overflow" href="http://stackoverflow.com/cv/django-developer" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/alexmorozov" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/alexmorozov" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-facebook" href="https://facebook.com/theveryalexmorozov" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="sc-rss" href="https://morozov.ca/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+
+<article>
+  <header>
+    <h1 id="how-to-send-jabber-xmpp-messages-from-django">How to send Jabber (<span class="caps">XMPP</span>) messages from&nbsp;Django</h1>
+    <p>Posted on Wed 11 November 2015 in <a href="./category/programming.html">Programming</a></p>
+  </header>
+  <div>
+    <p><img alt="Django and Jabber" src="./images/jabber-logo.png" /></p>
+
+
+<p>Did you ever want to have a simple Django notification bot? An intranet one
+which just sends you (or someone you tell it to) Jabber messages when certain
+events occur? So did I. Please, welcome: <strong><a href="https://github.com/alexmorozov/django-jabber">django-jabber</a></strong>.</p>
+
+
+<p>Installation and configuration are dead&nbsp;simple:</p>
+<pre><code>:::shell
+pip install django-jabber
+</code></pre>
+<p>And then put this at your&nbsp;settings.py:</p>
+<pre><code>:::python
+INSTALLED_APPS = (
+    ...
+    'django_jabber',
+    ...
+)
+
+# Tweak settings below as necessary
+JABBER_HOST = 'jabber.domain.com'
+JABBER_USER = 'robot@domain.com'
+JABBER_PASSWORD = 'someStr0ngOne!1'
+JABBER_USE_TLS = True
+JABBER_USE_SSL = False
+JABBER_DRY_RUN = False  # Useful for testing
+</code></pre>
+<p>And we&#8217;re&nbsp;done!</p>
+<p>Now let&#8217;s say you have an intranet forum. And you want to tell Bob and Alice
+that new topic is&nbsp;posted:</p>
+<pre><code>:::python
+from django_jabber import send_message
+
+recipients = ['bob', 'alice', ]
+topic = 'Hey there!'
+send_message(u'New topic: %s' % topic, recipients)
+</code></pre>
+<p>Notice we omit the <code>@domain</code> part in recipients&#8217; names. The package assumes you
+use it in-house, having one domain. It would be easy, though, to make it
+understand foreign domains (pull requests are&nbsp;welcome!).</p>
+<p>That&#8217;s it! Let me know if you have any ideas on improving this&nbsp;package.</p>
+  </div>
+  <div>
+    <h4>Read on:</h4>
+    <ul>
+      <li>
+        <a href="./tip-how-to-get-a-single-objects-value-with-django-orm.html">
+          Tip: How to get a single object`s value with Django <span class="caps">ORM</span>
+        </a>
+      </li>
+      <li>
+        <a href="./managed-search-and-replace-in-many-files-using-vim-and-ag.html">
+          Managed search and replace in many files using Vim and&nbsp;ag.
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/django.html">django</a>
+      <a href="./tag/python.html">python</a>
+      <a href="./tag/jabber.html">jabber</a>
+      <a href="./tag/xmpp.html">xmpp</a>
+    </p>
+  </div>
+  <div class="center social-share">
+    <p>Like this article? Share it with your friends!</p>
+    <div class="addthis_native_toolbox"></div>
+    <div class="addthis_sharing_toolbox"></div>
+  </div>
+<h4>What do you think about it? Share your thoughts!</h4>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'alexmorozovgithubio';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</article>
+
+    <footer>
+      <p>&copy; Alex Morozov </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69605514-1', 'auto');
+  ga('send', 'pageview');
+</script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-563ca099f23dfb64" async="async"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "How to send Jabber (<span class="caps">XMPP</span>) messages from&nbsp;Django",
+  "headline": "How to send Jabber (<span class="caps">XMPP</span>) messages from&nbsp;Django",
+  "datePublished": "2015-11-11 12:20:00+03:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Alex Morozov",
+    "url": "./author/alex-morozov.html"
+  },
+  "image": "/images/alex-morozov.jpg",
+  "url": "./how-to-send-jabber-xmpp-messages-from-django.html",
+  "description": "Did you ever want to have a simple Django notification bot? An intranet one which just sends you (or someone you tell it to) Jabber messages when certain events occur? So did I. Please, welcome: django-jabber."
+}
+</script></body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CTO with a CMO flavor - admin</title><link href="https://morozov.ca/" rel="alternate"></link><link href="https://morozov.ca/feeds/tag-admin.atom.xml" rel="self"></link><id>https://morozov.ca/</id><updated>2015-12-09T10:20:00+03:00</updated><entry><title>Why you should use the Django admin: 9 tips</title><link href="https://morozov.ca/why-you-should-use-the-django-admin-9-tips.html" rel="alternate"></link><published>2015-12-09T10:20:00+03:00</published><updated>2015-12-09T10:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2015-12-09:why-you-should-use-the-django-admin-9-tips.html</id><summary type="html">
+
+&lt;p&gt;This writing is inspired by a comment on Reddit concerning my &lt;a href="https://morozov.ca/when-you-shouldnt-use-the-django-admin.html"&gt;recent post&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span class="dquo"&gt;&amp;#8220;&lt;/span&gt;The problem is that everyone I speak to seems to think the opposite - that
+the admin is super-limited, inflexible and hard to&amp;nbsp;customize.&amp;#8221;&lt;/p&gt;
+&lt;p&gt;&amp;#8212; &lt;cite&gt;&lt;a href="https://www.reddit.com/r/django/comments/3sfg0x/when_you_shouldnt_use_the_django_admin/"&gt;andybak&lt;/a&gt; on Reddit&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I&amp;#8217;m about to break this prejudice right now. The Django admin is a really
+brilliant piece of software, which can significantly speed up your&amp;nbsp;development.&lt;/p&gt;
+&lt;p&gt;Here are some tips about the Django admin, which I&amp;#8217;ve found to be quite&amp;nbsp;useful.&lt;/p&gt;
+</summary><category term="django"></category><category term="python"></category><category term="admin"></category></entry><entry><title>When you shouldn’t use the Django admin</title><link href="https://morozov.ca/when-you-shouldnt-use-the-django-admin.html" rel="alternate"></link><published>2015-11-11T10:20:00+03:00</published><updated>2015-11-11T10:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2015-11-11:when-you-shouldnt-use-the-django-admin.html</id><summary type="html">&lt;p&gt;In case you&amp;#8217;ve thought I detest &lt;code&gt;django.contrib.admin&lt;/code&gt; &amp;#8212; by no means.
+Actually it&amp;#8217;s one of the Django&amp;#8217;s greatest features, I really love it. In most&amp;nbsp;cases.&lt;/p&gt;
+&lt;p&gt;Here&amp;#8217;s a real life story. We&amp;#8217;ve had to quickly put up the first version of an
+intranet claim tracking system, and one of our developers was just crazy about
+the Django admin&amp;#8230; So why not, we&amp;#8217;ve got along with the stock interface as the
+primary one for …&lt;/p&gt;</summary><category term="django"></category><category term="python"></category><category term="admin"></category></entry></feed>

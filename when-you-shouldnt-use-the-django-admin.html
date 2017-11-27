@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="./theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/font-awesome.min.css">
+  <link href="https://morozov.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CTO with a CMO flavor Atom">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Alex Morozov" />
+<meta name="description" content="In case you’ve thought I detest django.contrib.admin — by no means. Actually it’s one of the Django’s greatest features, I really love it. In most cases. Here’s a real life story. We’ve had to quickly put up the first version of an intranet claim tracking system, and one of our developers was just crazy about the Django admin… So why not, we’ve got along with the stock interface as the primary one for …" />
+<meta name="keywords" content="django, python, admin">
+<meta property="og:site_name" content="CTO with a CMO flavor"/>
+<meta property="og:title" content="When you shouldn’t use the Django admin"/>
+<meta property="og:description" content="In case you’ve thought I detest django.contrib.admin — by no means. Actually it’s one of the Django’s greatest features, I really love it. In most cases. Here’s a real life story. We’ve had to quickly put up the first version of an intranet claim tracking system, and one of our developers was just crazy about the Django admin… So why not, we’ve got along with the stock interface as the primary one for …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./when-you-shouldnt-use-the-django-admin.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-11-11 10:20:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="./author/alex-morozov.html">
+<meta property="article:section" content="Programming"/>
+<meta property="article:tag" content="django"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="admin"/>
+<meta property="og:image" content="/images/alex-morozov.jpg">  <title>When you shouldn’t use the Django admin. CTO with a CMO flavor</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="/images/alex-morozov.jpg" alt="CTO with a CMO flavor" title="CTO with a CMO flavor">
+      </a>
+      <h1><a href=".">CTO with a CMO flavor</a></h1>
+      <p>Alex Morozov's blog</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/about.html#about">About</a></li>
+          <li><a href="./pages/contact-me.html#contact-me">Contact&nbsp;me</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/djangoengineer" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-stack-overflow" href="http://stackoverflow.com/cv/django-developer" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/alexmorozov" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/alexmorozov" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-facebook" href="https://facebook.com/theveryalexmorozov" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="sc-rss" href="https://morozov.ca/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+
+<article>
+  <header>
+    <h1 id="when-you-shouldnt-use-the-django-admin">When you shouldn&#8217;t use the Django&nbsp;admin</h1>
+    <p>Posted on Wed 11 November 2015 in <a href="./category/programming.html">Programming</a></p>
+  </header>
+  <div>
+    <p>In case you&#8217;ve thought I detest <code>django.contrib.admin</code> &#8212; by no means.
+Actually it&#8217;s one of the Django&#8217;s greatest features, I really love it. In most&nbsp;cases.</p>
+<p>Here&#8217;s a real life story. We&#8217;ve had to quickly put up the first version of an
+intranet claim tracking system, and one of our developers was just crazy about
+the Django admin&#8230; So why not, we&#8217;ve got along with the stock interface as the
+primary one for our&nbsp;users.</p>
+<p>3 years after that, I know for sure: I&#8217;m the person who knows all the drawbacks
+of such decision. And I want to share them with&nbsp;you.</p>
+<p>Here&#8217;s my top 6 list of&nbsp;problems:</p>
+<h3 id="stock-templates-updates">Stock templates&#8217;&nbsp;updates</h3>
+<p>The worst thing is often they pass through the testing sieve. Tests pass,
+layout is broken, users complain. Upcoming 1.9 version introduces new flat
+design and I&#8217;m just afraid to&nbsp;upgrade.</p>
+<h3 id="unstable-javascript-api">Unstable javascript <span class="caps">API</span></h3>
+<p>Unlike the regular Django APIs, javascript ones are not guaranteed to be
+stable. In addition, they are not so customizable - for example, you just can&#8217;t
+set a popup width without overriding the whole file.  On the other hand,
+namespaced jQuery is really good. Most probably you won&#8217;t have any versioning
+problems between upgrades if you use additional jQuery for your own&nbsp;purposes.</p>
+<h3 id="insufficient-default-permissions">Insufficient default&nbsp;permissions</h3>
+<p>If you want to see a list of objects, Django admin gives you a convenient
+&#8216;changelist&#8217; view. You can tweak in a lot of ways, which is cool, but there&#8217;s a
+major problem: to see a changelist, one has to have the &#8216;change&#8217; permission.
+While it&#8217;s perfectly normal for basic sites, more complex setups often need the
+&#8216;view&#8217; permission, which allows to view a list of, say, tickets, while not
+allowing to edit&nbsp;them.</p>
+<p>So one is on a fence between two options: either to lose the changelist
+functionality, or to override the changelist view by copy-pasting 90% of the
+code. Bad decisions, I must&nbsp;say.</p>
+<h3 id="no-chance-of-using-generic-cbvs">No chance of using generic&nbsp;CBVs</h3>
+<p>I imagine some day we will see the Django admin based on the generic
+class-based views. For now, if other parts of your site use CBVs for shared
+behaviour, you must have some additional glue to add this behaviour to the
+admin. You may recall context processors and middleware, but in my opinion
+they are not as handy as a class&nbsp;tree.</p>
+<h3 id="monolythic-implementation">Monolythic&nbsp;implementation</h3>
+<p>The <code>django.contrib.admin.options</code> module is about 1 900 lines. I must say
+the most of that code is very readable and straightforward, but dude, almost 2K
+lines in one file! Reminds me of that Flask one-file web apps - you know, 10K
+lines is not the limit. For those who interested, only <code>django.db.models</code>
+package have some larger&nbsp;files.</p>
+<h3 id="fieldsets-handle-only-the-basic-cases">Fieldsets handle only the basic&nbsp;cases</h3>
+<p>As for the admin fieldsets, they&#8217;re very handy when you work with relatively
+simple models. If you want to organize some kind of tabs, collapsible
+fieldsets, etc - you will have to code your own or to use custom&nbsp;modules.</p>
+<h2 id="so-what">So&nbsp;what?</h2>
+<p>To make sure you get me right: the above is not about how bad the Django admin
+is. It&#8217;s about not putting too much expectations on the rather simple tool. So
+dont repeat our mistakes. For me, here&#8217;s the&nbsp;formula:</p>
+<p>Consider to stick with Django admin if two conditions are&nbsp;met:</p>
+<ul>
+<li>You expose the admin to the small group of experienced users (content&nbsp;managers)</li>
+<li>Your models, relations and workflow are simple&nbsp;enough.</li>
+</ul>
+<p><em><span class="caps">UPDATE</span></em>: I&#8217;ve written a post about <a href="./why-you-should-use-the-django-admin-9-tips.html">why you should use the Django admin</a>, be sure to check it&nbsp;out.</p>
+  </div>
+  <div>
+    <h4>Read on:</h4>
+    <ul>
+      <li>
+        <a href="./tip-how-to-get-a-single-objects-value-with-django-orm.html">
+          Tip: How to get a single object`s value with Django <span class="caps">ORM</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/django.html">django</a>
+      <a href="./tag/python.html">python</a>
+      <a href="./tag/admin.html">admin</a>
+    </p>
+  </div>
+  <div class="center social-share">
+    <p>Like this article? Share it with your friends!</p>
+    <div class="addthis_native_toolbox"></div>
+    <div class="addthis_sharing_toolbox"></div>
+  </div>
+<h4>What do you think about it? Share your thoughts!</h4>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'alexmorozovgithubio';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</article>
+
+    <footer>
+      <p>&copy; Alex Morozov </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69605514-1', 'auto');
+  ga('send', 'pageview');
+</script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-563ca099f23dfb64" async="async"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "When you shouldn&#8217;t use the Django&nbsp;admin",
+  "headline": "When you shouldn&#8217;t use the Django&nbsp;admin",
+  "datePublished": "2015-11-11 10:20:00+03:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Alex Morozov",
+    "url": "./author/alex-morozov.html"
+  },
+  "image": "/images/alex-morozov.jpg",
+  "url": "./when-you-shouldnt-use-the-django-admin.html",
+  "description": "In case you’ve thought I detest django.contrib.admin — by no means. Actually it’s one of the Django’s greatest features, I really love it. In most cases. Here’s a real life story. We’ve had to quickly put up the first version of an intranet claim tracking system, and one of our developers was just crazy about the Django admin… So why not, we’ve got along with the stock interface as the primary one for …"
+}
+</script></body>
+</html>

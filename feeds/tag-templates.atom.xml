@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>CTO with a CMO flavor - templates</title><link href="https://morozov.ca/" rel="alternate"></link><link href="https://morozov.ca/feeds/tag-templates.atom.xml" rel="self"></link><id>https://morozov.ca/</id><updated>2016-07-11T12:20:00+03:00</updated><entry><title>Django: how to create PDF, MS Word and Excel documents from templates</title><link href="https://morozov.ca/django-pdf-msword-excel-templates.html" rel="alternate"></link><published>2016-07-11T12:20:00+03:00</published><updated>2016-07-11T12:20:00+03:00</updated><author><name>Alex Morozov</name></author><id>tag:morozov.ca,2016-07-11:django-pdf-msword-excel-templates.html</id><summary type="html">
+
+&lt;p&gt;If you&amp;#8217;re building a Django system that implies serving some kind of documents
+like reports or bills, chances are you want to provide docs in various formats
+from &lt;span class="caps"&gt;PDF&lt;/span&gt; to &lt;span class="caps"&gt;MS&lt;/span&gt; Word to &lt;span class="caps"&gt;HTML&lt;/span&gt;. But how to implement this without resorting to
+numerous templates and packages for each document&amp;nbsp;type?&lt;/p&gt;
+</summary><category term="django"></category><category term="python"></category><category term="libreoffice"></category><category term="pylokit"></category><category term="templates"></category><category term="documents"></category></entry></feed>

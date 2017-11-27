@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="./theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/font-awesome.min.css">
+  <link href="https://morozov.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CTO with a CMO flavor Atom">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Alex Morozov" />
+<meta name="description" content="If you’re building a Django system that implies serving some kind of documents like reports or bills, chances are you want to provide docs in various formats from PDF to MS Word to HTML. But how to implement this without resorting to numerous templates and packages for each document type?" />
+<meta name="keywords" content="django, python, libreoffice, pylokit, templates, documents">
+<meta property="og:site_name" content="CTO with a CMO flavor"/>
+<meta property="og:title" content="Django: how to create PDF, MS Word and Excel documents from templates"/>
+<meta property="og:description" content="If you’re building a Django system that implies serving some kind of documents like reports or bills, chances are you want to provide docs in various formats from PDF to MS Word to HTML. But how to implement this without resorting to numerous templates and packages for each document type?"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./django-pdf-msword-excel-templates.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2016-07-11 12:20:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="./author/alex-morozov.html">
+<meta property="article:section" content="Programming"/>
+<meta property="article:tag" content="django"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="libreoffice"/>
+<meta property="article:tag" content="pylokit"/>
+<meta property="article:tag" content="templates"/>
+<meta property="article:tag" content="documents"/>
+<meta property="og:image" content="/images/alex-morozov.jpg">  <title>Django: how to create PDF, MS Word and Excel documents from templates. CTO with a CMO flavor</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="/images/alex-morozov.jpg" alt="CTO with a CMO flavor" title="CTO with a CMO flavor">
+      </a>
+      <h1><a href=".">CTO with a CMO flavor</a></h1>
+      <p>Alex Morozov's blog</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/about.html#about">About</a></li>
+          <li><a href="./pages/contact-me.html#contact-me">Contact&nbsp;me</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/djangoengineer" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-stack-overflow" href="http://stackoverflow.com/cv/django-developer" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/alexmorozov" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/alexmorozov" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-facebook" href="https://facebook.com/theveryalexmorozov" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="sc-rss" href="https://morozov.ca/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+
+<article>
+  <header>
+    <h1 id="django-pdf-msword-excel-templates">Django: how to create <span class="caps">PDF</span>, <span class="caps">MS</span> Word and Excel documents from&nbsp;templates</h1>
+    <p>Posted on Mon 11 July 2016 in <a href="./category/programming.html">Programming</a></p>
+  </header>
+  <div>
+    <p><img alt="Django and PDF, MS Word, Excel templates" src="./images/document-formats.png" /></p>
+
+
+<p>If you&#8217;re building a Django system that implies serving some kind of documents
+like reports or bills, chances are you want to provide docs in various formats
+from <span class="caps">PDF</span> to <span class="caps">MS</span> Word to <span class="caps">HTML</span>. But how to implement this without resorting to
+numerous templates and packages for each document&nbsp;type?</p>
+
+
+<p>To tackle this issue I wrote <a href="https://github.com/alexmorozov/templated-docs">templated_docs</a> - a Django package that
+allows you to generate documents in multiple formats from just one template.
+And what&#8217;s even better is that you can use a regular Django templating language
+inside those&nbsp;docs!</p>
+<p>In this post I&#8217;ll give you a gist of what you can do with this&nbsp;module.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="1-install-libreoffice">1. Install&nbsp;LibreOffice</h3>
+<p><em>Templated-docs</em> uses LibreOffice for conversion under the hood, so make sure
+you have a recent version installed (5.x versions will do fine). There is no
+need of having LibreOffice running all the time, in fact, you don&#8217;t even need a
+graphical subsystem to be installed on your server. We&#8217;ll use the suite as a
+library via the LibreOfficeKit <span class="caps">API</span>. Note the path Libreoffice has been
+installed to, we might need it&nbsp;later.</p>
+<h3 id="2-install-templated-docs">2. Install <code>templated-docs</code></h3>
+<p>Installation is as simple as <code>pip install templated-docs</code>. Don&#8217;t forget to add
+<code>templated_docs</code> to your <code>INSTALLED_APPS</code> Django settings. Then specify the
+path to LibreOffice&#8217;s <strong><code>program</code></strong> directory in your&nbsp;settings:</p>
+<pre><code>:::python
+TEMPLATED_DOCS_LIBREOFFICE_PATH = '/usr/share/libreoffice/program'
+</code></pre>
+<p>If you are using cpython you may need the <code>libffi</code> development package in order to compile <span class="caps">CFFI</span>.</p>
+<ul>
+<li>Ubuntu: <code>apt-get install libffi-dev</code></li>
+<li>MacOS: <code>brew install libffi</code></li>
+</ul>
+<h3 id="3-there-is-no-step-3-were-all-set">3. There is no step 3, we&#8217;re all&nbsp;set!</h3>
+<h2 id="usage-example">Usage&nbsp;example</h2>
+<p>Let&#8217;s put together a dead-simple system for issuing invoices. What we have here
+is a <code>Customer</code> model, and an <code>InvoiceForm</code> form to fill in some required&nbsp;fields.</p>
+<pre><code>:::python
+# models.py
+from django.db import models
+
+
+class Customer(models.Model):
+    name = models.CharField(max_length=200)
+    address = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+# forms.py
+from django import forms
+
+from invoices.models import Customer
+
+
+class InvoiceForm(forms.Form):
+    FORMAT_CHOICES = (
+        ('pdf', 'PDF'),
+        ('docx', 'MS Word'),
+        ('html', 'HTML'),
+    )
+    number = forms.CharField(label='Invoice #')
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all())
+    subject = forms.CharField()
+    amount = forms.DecimalField()
+    format = forms.ChoiceField(choices=FORMAT_CHOICES)
+
+
+# views.py
+from django.shortcuts import render
+
+from templated_docs import fill_template
+from templated_docs.http import FileResponse
+
+from invoices.forms import InvoiceForm
+
+
+def invoice_view(request):
+    form = InvoiceForm(request.POST or None)
+
+    if form.is_valid():
+        doctype = form.cleaned_data['format']
+        filename = fill_template(
+            'invoices/invoice.odt', form.cleaned_data,
+            output_format=doctype)
+        visible_filename = 'invoice.{}'.format(doctype)
+
+        return FileResponse(filename, visible_filename)
+    else:
+        return render(request, 'invoices/form.html', {'form': form})
+</code></pre>
+<p>Next, create the actual invoice template and save it as <code>invoices/invoice.odt</code> in your
+Django templates&#8217; folder. It could look like&nbsp;this:</p>
+<p><img alt="An invoice sample" src="./images/invoice-template.png" /></p>
+<p>And that&#8217;s it! Fill out the form, choose the format you need, and instantly get
+a templated and converted document (the one in the picture is <span class="caps">PDF</span>):</p>
+<p><img alt="An invoice sample" src="./images/invoice-pdf.png" /></p>
+<p>All the sample code, including the template, is available for playing in the
+<a href="https://github.com/alexmorozov/templated-docs/tree/master/example">example/</a> folder of the project&#8217;s&nbsp;repository.</p>
+<p><em>Templated_docs</em> offers more than a simple document generation. For example,
+you can embed images in documents and easily create Django management command
+that generate docs. Consult <a href="https://templated-docs.readthedocs.io/en/latest/">the documentation</a> for more&nbsp;information.</p>
+<p>Have you found an interesting applicaton for this package? Share in&nbsp;comments!</p>
+  </div>
+  <div>
+    <h4>Read on:</h4>
+    <ul>
+      <li>
+        <a href="./why-you-should-use-the-django-admin-9-tips.html">
+          Why you should use the Django admin: 9&nbsp;tips
+        </a>
+      </li>
+      <li>
+        <a href="./make-personal-growth-books-work-for-you-the-ideas-depot-reading-strategy.html">
+          Make personal growth books work for you: the &#8220;Ideas Depot&#8221; reading&nbsp;strategy
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/django.html">django</a>
+      <a href="./tag/python.html">python</a>
+      <a href="./tag/libreoffice.html">libreoffice</a>
+      <a href="./tag/pylokit.html">pylokit</a>
+      <a href="./tag/templates.html">templates</a>
+      <a href="./tag/documents.html">documents</a>
+    </p>
+  </div>
+  <div class="center social-share">
+    <p>Like this article? Share it with your friends!</p>
+    <div class="addthis_native_toolbox"></div>
+    <div class="addthis_sharing_toolbox"></div>
+  </div>
+<h4>What do you think about it? Share your thoughts!</h4>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'alexmorozovgithubio';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</article>
+
+    <footer>
+      <p>&copy; Alex Morozov </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69605514-1', 'auto');
+  ga('send', 'pageview');
+</script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-563ca099f23dfb64" async="async"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "Django: how to create <span class="caps">PDF</span>, <span class="caps">MS</span> Word and Excel documents from&nbsp;templates",
+  "headline": "Django: how to create <span class="caps">PDF</span>, <span class="caps">MS</span> Word and Excel documents from&nbsp;templates",
+  "datePublished": "2016-07-11 12:20:00+03:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Alex Morozov",
+    "url": "./author/alex-morozov.html"
+  },
+  "image": "/images/alex-morozov.jpg",
+  "url": "./django-pdf-msword-excel-templates.html",
+  "description": "If you’re building a Django system that implies serving some kind of documents like reports or bills, chances are you want to provide docs in various formats from PDF to MS Word to HTML. But how to implement this without resorting to numerous templates and packages for each document type?"
+}
+</script></body>
+</html>
