@@ -89,9 +89,10 @@ installed to, we might need it&nbsp;later.</p>
 <p>Installation is as simple as <code>pip install templated-docs</code>. Don&#8217;t forget to add
 <code>templated_docs</code> to your <code>INSTALLED_APPS</code> Django settings. Then specify the
 path to LibreOffice&#8217;s <strong><code>program</code></strong> directory in your&nbsp;settings:</p>
-<pre><code>:::python
-TEMPLATED_DOCS_LIBREOFFICE_PATH = '/usr/share/libreoffice/program'
-</code></pre>
+<div class="highlight"><pre><span></span><span class="n">TEMPLATED_DOCS_LIBREOFFICE_PATH</span> <span class="o">=</span> <span class="s1">&#39;/usr/share/libreoffice/program&#39;</span>
+</pre></div>
+
+
 <p>If you are using cpython you may need the <code>libffi</code> development package in order to compile <span class="caps">CFFI</span>.</p>
 <ul>
 <li>Ubuntu: <code>apt-get install libffi-dev</code></li>
@@ -101,61 +102,62 @@ TEMPLATED_DOCS_LIBREOFFICE_PATH = '/usr/share/libreoffice/program'
 <h2 id="usage-example">Usage&nbsp;example</h2>
 <p>Let&#8217;s put together a dead-simple system for issuing invoices. What we have here
 is a <code>Customer</code> model, and an <code>InvoiceForm</code> form to fill in some required&nbsp;fields.</p>
-<pre><code>:::python
-# models.py
-from django.db import models
+<div class="highlight"><pre><span></span><span class="c1"># models.py</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 
 
-class Customer(models.Model):
-    name = models.CharField(max_length=200)
-    address = models.TextField()
+<span class="k">class</span> <span class="nc">Customer</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
 
-    def __str__(self):
-        return self.name
-
-
-# forms.py
-from django import forms
-
-from invoices.models import Customer
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 
 
-class InvoiceForm(forms.Form):
-    FORMAT_CHOICES = (
-        ('pdf', 'PDF'),
-        ('docx', 'MS Word'),
-        ('html', 'HTML'),
-    )
-    number = forms.CharField(label='Invoice #')
-    customer = forms.ModelChoiceField(queryset=Customer.objects.all())
-    subject = forms.CharField()
-    amount = forms.DecimalField()
-    format = forms.ChoiceField(choices=FORMAT_CHOICES)
+<span class="c1"># forms.py</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="kn">from</span> <span class="nn">invoices.models</span> <span class="kn">import</span> <span class="n">Customer</span>
 
 
-# views.py
-from django.shortcuts import render
+<span class="k">class</span> <span class="nc">InvoiceForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">FORMAT_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;PDF&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;docx&#39;</span><span class="p">,</span> <span class="s1">&#39;MS Word&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;HTML&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Invoice #&#39;</span><span class="p">)</span>
+    <span class="n">customer</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelChoiceField</span><span class="p">(</span><span class="n">queryset</span><span class="o">=</span><span class="n">Customer</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">()</span>
+    <span class="n">amount</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">()</span>
+    <span class="n">format</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">FORMAT_CHOICES</span><span class="p">)</span>
 
-from templated_docs import fill_template
-from templated_docs.http import FileResponse
 
-from invoices.forms import InvoiceForm
+<span class="c1"># views.py</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+<span class="kn">from</span> <span class="nn">templated_docs</span> <span class="kn">import</span> <span class="n">fill_template</span>
+<span class="kn">from</span> <span class="nn">templated_docs.http</span> <span class="kn">import</span> <span class="n">FileResponse</span>
+
+<span class="kn">from</span> <span class="nn">invoices.forms</span> <span class="kn">import</span> <span class="n">InvoiceForm</span>
 
 
-def invoice_view(request):
-    form = InvoiceForm(request.POST or None)
+<span class="k">def</span> <span class="nf">invoice_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">InvoiceForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="bp">None</span><span class="p">)</span>
 
-    if form.is_valid():
-        doctype = form.cleaned_data['format']
-        filename = fill_template(
-            'invoices/invoice.odt', form.cleaned_data,
-            output_format=doctype)
-        visible_filename = 'invoice.{}'.format(doctype)
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+        <span class="n">doctype</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">fill_template</span><span class="p">(</span>
+            <span class="s1">&#39;invoices/invoice.odt&#39;</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">,</span>
+            <span class="n">output_format</span><span class="o">=</span><span class="n">doctype</span><span class="p">)</span>
+        <span class="n">visible_filename</span> <span class="o">=</span> <span class="s1">&#39;invoice.{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doctype</span><span class="p">)</span>
 
-        return FileResponse(filename, visible_filename)
-    else:
-        return render(request, 'invoices/form.html', {'form': form})
-</code></pre>
+        <span class="k">return</span> <span class="n">FileResponse</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">visible_filename</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;invoices/form.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+</pre></div>
+
+
 <p>Next, create the actual invoice template and save it as <code>invoices/invoice.odt</code> in your
 Django templates&#8217; folder. It could look like&nbsp;this:</p>
 <p><img alt="An invoice sample" src="./images/invoice-template.png" /></p>

@@ -103,83 +103,85 @@ Django will suit your&nbsp;needs.</p>
 interface looks like&#8230; You know, not that good.  To fix it, we resembled
 the database structure with several Django models and put together a simple
 admin&nbsp;interface:</p>
-<pre><code>:::python
-# models.py
-class Picture(models.Model):
-    DOG = 1
-    CAT = 2
-    ANIMAL_KIND_CHOICES = (
-        (DOG, 'dog'),
-        (CAT, 'cat'),
-    )
+<div class="highlight"><pre><span></span><span class="c1"># models.py</span>
+<span class="k">class</span> <span class="nc">Picture</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">DOG</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">CAT</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ANIMAL_KIND_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">DOG</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">CAT</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
 
-    title = models.CharField(max_length=200)
-    author = models.ForeignKey(Author, related_name='pictures')
-    animal_kind = models.IntegerField(choices=ANIMAL_KIND_CHOICES)
-    photo = models.ImageField(upload_to='animals')
-    is_promoted = models.BooleanField(default=False)
-
-
-class Author(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Author</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pictures&#39;</span><span class="p">)</span>
+    <span class="n">animal_kind</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">ANIMAL_KIND_CHOICES</span><span class="p">)</span>
+    <span class="n">photo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;animals&#39;</span><span class="p">)</span>
+    <span class="n">is_promoted</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
 
-class Comment(models.Model):
-    author = models.ForeignKey(Author, related_name='comments')
-    picture = models.ForeignKey(Picture, related_name='comments')
-    comment = models.TextField()
-    editors_note = models.TextField()
-
-# admin.py
-class PictureAdmin(admin.ModelAdmin):
-    list_display_fields = ('photo', 'animal_kind', 'author', 'is_promoted', )
+<span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">()</span>
 
 
-class AuthorAdmin(admin.ModelAdmin):
-    list_display_fields = ('name', 'email', )
+<span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Author</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;comments&#39;</span><span class="p">)</span>
+    <span class="n">picture</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Picture</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;comments&#39;</span><span class="p">)</span>
+    <span class="n">comment</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">editors_note</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+
+<span class="c1"># admin.py</span>
+<span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_display_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;photo&#39;</span><span class="p">,</span> <span class="s1">&#39;animal_kind&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;is_promoted&#39;</span><span class="p">,</span> <span class="p">)</span>
 
 
-class CommentAdmin(admin.ModelAdmin):
-    list_display_fields = ('picture', 'author', )
-</code></pre>
+<span class="k">class</span> <span class="nc">AuthorAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_display_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">CommentAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_display_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;picture&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+
+
 <h3 id="tip-2-filter-your-data-the-way-you-like">Tip #2: Filter your data the way you&nbsp;like</h3>
 <p>A lot of people use the Django admin&#8217;s ability to filter on specific fields.
 You know, put a field name to the <code>list_filter</code> attribute and here we go. But it&#8217;s
 also extremely easy to create a custom&nbsp;filters!</p>
 <p>Suppose eventually you decide to promote all the authors having 100+ posts.
 But how do we distinguish them? Let&#8217;s create a filter and add it to the our&nbsp;changelist.</p>
-<pre><code>:::python
-class ProductiveAuthorsFilter(admin.SimpleListFilter):
-    parameter_name = 'is_productive'
-    title = 'Productive author'
-    YES, NO = 1, 0
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductiveAuthorsFilter</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">SimpleListFilter</span><span class="p">):</span>
+    <span class="n">parameter_name</span> <span class="o">=</span> <span class="s1">&#39;is_productive&#39;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Productive author&#39;</span>
+    <span class="n">YES</span><span class="p">,</span> <span class="n">NO</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
 
-    # Number of comments for an author to be considered a productive one
-    THRESHOLD = 100
+    <span class="c1"># Number of comments for an author to be considered a productive one</span>
+    <span class="n">THRESHOLD</span> <span class="o">=</span> <span class="mi">100</span>
 
-    def lookups(self, request, model_admin):
-        return (
-            (self.YES, 'yes'),
-            (self.NO, 'no'),
-        )
+    <span class="k">def</span> <span class="nf">lookups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">model_admin</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">YES</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NO</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
 
-    def queryset(self, request, queryset):
-        qs = queryset.annotate(Count('comments'))
+    <span class="k">def</span> <span class="nf">queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">):</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="n">queryset</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">Count</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">))</span>
 
-        # Note the syntax. This way we avoid touching the queryset if our
-        # filter is not used at all.
-        if self.value() == self.YES:
-            return qs.filter(comments__count__gte=self.THRESHOLD)
-        if self.value() == self.NO:
-            return qs.filter(comments__count__lt=self.THRESHOLD)
+        <span class="c1"># Note the syntax. This way we avoid touching the queryset if our</span>
+        <span class="c1"># filter is not used at all.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">YES</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">qs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">comments__count__gte</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">THRESHOLD</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NO</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">qs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">comments__count__lt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">THRESHOLD</span><span class="p">)</span>
 
-        return queryset
+        <span class="k">return</span> <span class="n">queryset</span>
 
 
-class PictureAdmin(admin.ModelAdmin):
-    list_filters = [..., ProductiveAuthorsFilter]
-</code></pre>
+<span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_filters</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">ProductiveAuthorsFilter</span><span class="p">]</span>
+</pre></div>
+
+
 <p>Now we can easily select our core authors. How do we actually promote them then?
 Let&#8217;s move on to the next&nbsp;section.</p>
 <h3 id="tip-3-put-the-common-stuff-to-actions">Tip #3: Put the common stuff to&nbsp;&#8216;actions&#8217;</h3>
@@ -187,15 +189,16 @@ Let&#8217;s move on to the next&nbsp;section.</p>
 at the top of each model&#8217;s list? It would be very handy if we select some
 pictures and make them &#8220;promoted&#8221; with a single click, right? Let&#8217;s
 implement&nbsp;it:</p>
-<pre><code>:::python
-class PictureAdmin(admin.ModelAdmin):
-    actions = ['promote', ]
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;promote&#39;</span><span class="p">,</span> <span class="p">]</span>
 
-    def promote(self, request, queryset):
-        queryset.update(is_promoted=True)
-        self.message_user(request, 'The posts are promoted')
-    promote.short_description = 'Promote the pictures'
-</code></pre>
+    <span class="k">def</span> <span class="nf">promote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">):</span>
+        <span class="n">queryset</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">is_promoted</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_user</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;The posts are promoted&#39;</span><span class="p">)</span>
+    <span class="n">promote</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s1">&#39;Promote the pictures&#39;</span>
+</pre></div>
+
+
 <p>And that&#8217;s it! No longer opening each form one by one! Plus, it&#8217;s quite easy
 to extend our action further, adding, for example, an intermediate form. Django
 docs have an <a href="https://docs.djangoproject.com/en/1.8/ref/contrib/admin/actions/#actions-that-provide-intermediate-pages">excellent section</a> on&nbsp;this.</p>
@@ -205,24 +208,26 @@ installations I&#8217;ve seen the search box is used for searching across one mo
 fields. But the Django search really shines when you realize it can handle the
 relationships. So assume we want it to search in pictures&#8217; titles, authors&#8217;
 names and comments&#8217; texts. How do we achieve&nbsp;that?</p>
-<pre><code>:::python
-class PictureAdmin(admin.ModelAdmin):
-    search_fields = ('title', 'author__name', 'comments__text', )
-</code></pre>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;author__name&#39;</span><span class="p">,</span> <span class="s1">&#39;comments__text&#39;</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+
+
 <p>Just don&#8217;t forget to add some full-text indices, if your database is big&nbsp;enough.</p>
 <h3 id="tip-5-view-an-objects-page-an-easy-way">Tip #5: View an object&#8217;s page – an easy&nbsp;way</h3>
 <p>A very common need is to view the object&#8217;s public page on site. By default you
 have to browse to the object&#8217;s form and then click on the &#8220;View on site&#8221; button.
 That&#8217;s how to make it a bit&nbsp;easier:</p>
-<pre><code>:::python
-class PictureAdmin(admin.ModelAdmin):
-    list_fields = [..., 'object_link']
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_fields</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="s1">&#39;object_link&#39;</span><span class="p">]</span>
 
-    def object_link(self, item):
-        url = item.get_absolute_url()
-        return format_html(u'&lt;a href="{url}"&gt;open&lt;/a&gt;', url=url)
-    object_link.short_description = 'View on site'
-</code></pre>
+    <span class="k">def</span> <span class="nf">object_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get_absolute_url</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;&lt;a href=&quot;{url}&quot;&gt;open&lt;/a&gt;&#39;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">object_link</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s1">&#39;View on site&#39;</span>
+</pre></div>
+
+
 <p>This snippet adds a &#8220;View on site&#8221; link to each object in the list. Here we
 assume you&#8217;ve already implemented the <code>get_absolute_url()</code> method on your
 model. If not - go ahead and do it, it&#8217;ll save you much time. And you&#8217;ll
@@ -230,11 +235,12 @@ probably want to move this snippet to a mixin, or a shared base admin&nbsp;class
 <h3 id="tip-6-edit-fields-in-place-right-on-the-list-page">Tip #6: Edit fields in-place right on the list&nbsp;page</h3>
 <p>Suppose we need to put an editor&#8217;s note to each comment. And naturally enough,
 we don&#8217;t want to open each comment&#8217;s changeform. To implement this, adjust your ModelAdmin a&nbsp;bit:</p>
-<pre><code>:::python
-class CommentAdmin(admin.ModelAdmin):
-    list_display_fields = ('picture', 'author', 'editors_note', )
-    list_editable = ('editors_note', )
-</code></pre>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CommentAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_display_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;picture&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;editors_note&#39;</span><span class="p">,</span> <span class="p">)</span>
+    <span class="n">list_editable</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;editors_note&#39;</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+
+
 <p>That&#8217;s literally all. Now you can open a comments list, filter it down
 to your needs, and start writing notes&nbsp;away.</p>
 <h3 id="tip-7-customize-your-totals-with-the-data-you-really-need">Tip #7: Customize your totals with the data you really&nbsp;need</h3>
@@ -242,56 +248,59 @@ to your needs, and start writing notes&nbsp;away.</p>
 separate the counts of dogs&#8217; and cats&#8217; pics. This functionality will take a bit
 more of code: we have to override the changelist itself, as well as the html
 template (more on <a href="https://docs.djangoproject.com/en/1.9/ref/contrib/admin/#overriding-admin-templates">template overriding</a>).</p>
-<pre><code>:::python
-from django.contrib.admin.views.main import ChangeList
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.admin.views.main</span> <span class="kn">import</span> <span class="n">ChangeList</span>
 
-class PicturesChangeList(admin.ChangeList):
-    def get_results(self, request):
-        super(PicturesChangeList, self).get_results(request)
-        totals = self.result_list.aggregate(
-            dogs_count=Sum(Case(When(animal_kind=Picture.DOG, then=1),
-                           output_field=IntegerField())),
-            cats_count=Sum(Case(When(animal_kind=Picture.CAT, then=1),
-                           output_field=IntegerField())))
-        self.totals = totals
+<span class="k">class</span> <span class="nc">PicturesChangeList</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ChangeList</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PicturesChangeList</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">totals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result_list</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span>
+            <span class="n">dogs_count</span><span class="o">=</span><span class="n">Sum</span><span class="p">(</span><span class="n">Case</span><span class="p">(</span><span class="n">When</span><span class="p">(</span><span class="n">animal_kind</span><span class="o">=</span><span class="n">Picture</span><span class="o">.</span><span class="n">DOG</span><span class="p">,</span> <span class="n">then</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                           <span class="n">output_field</span><span class="o">=</span><span class="n">IntegerField</span><span class="p">())),</span>
+            <span class="n">cats_count</span><span class="o">=</span><span class="n">Sum</span><span class="p">(</span><span class="n">Case</span><span class="p">(</span><span class="n">When</span><span class="p">(</span><span class="n">animal_kind</span><span class="o">=</span><span class="n">Picture</span><span class="o">.</span><span class="n">CAT</span><span class="p">,</span> <span class="n">then</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                           <span class="n">output_field</span><span class="o">=</span><span class="n">IntegerField</span><span class="p">())))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totals</span> <span class="o">=</span> <span class="n">totals</span>
 
 
-class PictureAdmin(admin.ModelAdmin):
-    def get_changelist(self, request):
-        return PicturesChangeList
-</code></pre>
+<span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_changelist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">PicturesChangeList</span>
+</pre></div>
+
+
 <p>and the&nbsp;template:</p>
-<pre><code>:::html
-{% extends 'admin/change_list.html' %}
+<div class="highlight"><pre><span></span>{% extends &#39;admin/change_list.html&#39; %}
 {% block result_list %}
     {{ block.super }}
-    &lt;p&gt;
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
         There are
-        &lt;strong&gt;
-            {{ cl.totals.dogs_count|default:'none' }} dogs and
-            {{ cl.totals.cats_count|default:'none' }} cats
-        &lt;/strong&gt;
+        <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>
+            {{ cl.totals.dogs_count|default:&#39;none&#39; }} dogs and
+            {{ cl.totals.cats_count|default:&#39;none&#39; }} cats
+        <span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
         on this page.
-    &lt;/p&gt;
+    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 {% endblock %}
-</code></pre>
+</pre></div>
+
+
 <h3 id="tip-8-readonly-admin-interface-for-some-of-us">Tip #8: Readonly admin interface for some of&nbsp;us</h3>
 <p>Guess what? Your grandma wants to take a look at all these cuties, and she
 loves the Django admin interface she watched over your shoulder. But you&#8217;re sure she
 will ruin the whole site if there is a single button. Okay, let&#8217;s put together
 the grandma-proof&trade; readonly admin interface (who&#8217;s said&nbsp;&#8220;databrowse&#8221;?):</p>
-<pre><code>:::python
-class GrandmaProofAdmin(admin.ModelAdmin):
-    def get_readonly_fields(self, request, obj=None):
-        if request.user.username == 'granny':
-            return [f.name for f in self.model._meta.fields]
-        else:
-            return super(GrandmaProofAdmin, self).get_readonly_fields(request, obj)
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GrandmaProofAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_readonly_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;granny&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">fields</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GrandmaProofAdmin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_readonly_fields</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
 
 
-class PictureAdmin(GrandmaProofAdmin):
-    ...
-</code></pre>
+<span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">GrandmaProofAdmin</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+
+
 <p>Now you can safely grant your granny the <code>change pictures</code> permission in order
 to see the pictures list. Note that this solution surely will not suit any
 serious usage - you&#8217;ll need to handle <a href="https://gist.github.com/aaugustin/1388243">some more cases</a>.</p>
@@ -302,33 +311,34 @@ the action, clicking on a button&#8230; There should be a more convenient way,
 shouldn&#8217;t it? Let&#8217;s reduce all that stuff to actually clicking on a&nbsp;button.</p>
 <p>This time we will be implementing another granny&#8217;s big idea. She&#8217;d like to send
 an email to some authors, showing all her&nbsp;love.</p>
-<pre><code>:::python
-class PictureAdmin(admin.ModelAdmin):
-    list_fields = (..., 'mail_link', )
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_fields</span> <span class="o">=</span> <span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="s1">&#39;mail_link&#39;</span><span class="p">,</span> <span class="p">)</span>
 
-    def mail_link(self, obj):
-        dest = reverse('admin:myapp_pictures_mail_author',
-                       kwargs={'pk': obj.pk})
-        return format_html('&lt;a href="{url}"&gt;{title}&lt;/a&gt;',
-                           url=dest, title='send mail')
-    mail_link.short_description = 'Show some love'
-    mail_link.allow_tags = True
+    <span class="k">def</span> <span class="nf">mail_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;admin:myapp_pictures_mail_author&#39;</span><span class="p">,</span>
+                       <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pk&#39;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">pk</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">format_html</span><span class="p">(</span><span class="s1">&#39;&lt;a href=&quot;{url}&quot;&gt;{title}&lt;/a&gt;&#39;</span><span class="p">,</span>
+                           <span class="n">url</span><span class="o">=</span><span class="n">dest</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;send mail&#39;</span><span class="p">)</span>
+    <span class="n">mail_link</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s1">&#39;Show some love&#39;</span>
+    <span class="n">mail_link</span><span class="o">.</span><span class="n">allow_tags</span> <span class="o">=</span> <span class="bp">True</span>
 
-    def get_urls(self):
-        urls = [
-            url('^(?P&lt;pk&gt;\d+)/sendaletter/?$',
-                self.admin_site.admin_view(self.mail_view),
-                name='myapp_pictures_mail_author'),
-        ]
-        return urls + super(PictureAdmin, self).get_urls()
+    <span class="k">def</span> <span class="nf">get_urls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">url</span><span class="p">(</span><span class="s1">&#39;^(?P&lt;pk&gt;\d+)/sendaletter/?$&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">admin_site</span><span class="o">.</span><span class="n">admin_view</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mail_view</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;myapp_pictures_mail_author&#39;</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">urls</span> <span class="o">+</span> <span class="nb">super</span><span class="p">(</span><span class="n">PictureAdmin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_urls</span><span class="p">()</span>
 
-    def mail_view(self, request, *args, **kwargs):
-        obj = get_object_or_404(Picture, pk=kwargs['pk'])
-        send_mail('Feel the granny\'s love', 'Hey, she loves your pet!',
-                  'granny@yoursite.com', [obj.author.email])
-        self.message_user(request, 'The letter is on its way')
-        return redirect(reverse('admin:myapp_picture_changelist'))
-</code></pre>
+    <span class="k">def</span> <span class="nf">mail_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Picture</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pk&#39;</span><span class="p">])</span>
+        <span class="n">send_mail</span><span class="p">(</span><span class="s1">&#39;Feel the granny</span><span class="se">\&#39;</span><span class="s1">s love&#39;</span><span class="p">,</span> <span class="s1">&#39;Hey, she loves your pet!&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;granny@yoursite.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_user</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;The letter is on its way&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;admin:myapp_picture_changelist&#39;</span><span class="p">))</span>
+</pre></div>
+
+
 <p>Hope now she&#8217;s happy. A link has appeared along each object&#8217;s fields, allowing
 her to send a mail by simply clicking&nbsp;it.</p>
 <h3 id="bonus-tip-reduce-queries-by-adding-a-single-line-to-your-admin">Bonus Tip: Reduce queries by adding a single line to your&nbsp;admin</h3>
@@ -337,10 +347,11 @@ her to send a mail by simply clicking&nbsp;it.</p>
 related objects by passing their names to the <code>list_select_related</code> ModelAdmin
 attribute.  But did you know you haven&#8217;t to specify all your relations? Just
 set it to <code>True</code>, and Django will automatically preload foreign&nbsp;objects:</p>
-<pre><code>:::python
-class PictureAdmin(admin.ModelAdmin):
-    list_select_related = True
-</code></pre>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PictureAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+    <span class="n">list_select_related</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+
+
 <p>So guys, that&#8217;s it, hope you&#8217;ve liked it. Got any cool tips? Go ahead and share
 your favorite ones in&nbsp;comments!</p>
 <!&#8212;-

@@ -70,32 +70,38 @@ be manually&nbsp;reviewed.</p>
 
 
 <p>The text what I was looking for were actually two consecutive&nbsp;lines:</p>
-<pre><code>:::python
-    self.assertEqual(response.status_code, ...)
-    self.assertContains(response, ...)
-</code></pre>
+<div class="highlight"><pre><span></span>    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertContains</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+
+
 <p>Let&#8217;s fire up the <a href="https://github.com/ggreer/the_silver_searcher">ag</a> utility (a faster and feature-full fgrep&nbsp;replacement):</p>
-<pre><code>:::bash
-    user@host:~/src$ ag 'self.assertEqual\(response.status.{0,100}\s*self.assertContains' . | vi -
-</code></pre>
+<div class="highlight"><pre><span></span>    user@host:~/src$ ag <span class="s1">&#39;self.assertEqual\(response.status.{0,100}\s*self.assertContains&#39;</span> . <span class="p">|</span> vi -
+</pre></div>
+
+
 <p>The trick here is that ag uses multiline matching by default, therefore
 allowing us to search for several lines at once. And we pipe the search results
 to Vim, my editor of&nbsp;choice.</p>
 <p>Now we have a Vim window with a bunch of lines&nbsp;like:</p>
-<pre><code>...
+<div class="highlight"><pre><span></span>...
 tests/test_client/tests.py:732:        self.assertEqual(response.status_code, 200)
-tests/test_client/tests.py:733:        self.assertContains(response, 'This is a test')
+tests/test_client/tests.py:733:        self.assertContains(response, &#39;This is a test&#39;)
 tests/test_client/tests.py:743:        self.assertEqual(response.status_code, 200)
 tests/test_client/tests.py:744:        self.assertContains(response, echoed_request_line)
 tests/admin_views/tests.py:230:        self.assertEqual(response.status_code, 200)
-tests/admin_views/tests.py:231:        self.assertContains(response, 'value="My Section"',
+tests/admin_views/tests.py:231:        self.assertContains(response, &#39;value=&quot;My Section&quot;&#39;,
 ...
-</code></pre>
+</pre></div>
+
+
 <p>, and we definitely need a way to easily navigate to each file (preferably in
 the split window), analyze the case and make&nbsp;changes.</p>
 <p>Vim superpowers to the rescue! Let&#8217;s make a convenient&nbsp;shortcut:</p>
-<pre><code>:nnoremap &lt;CR&gt; :vertical wincmd F&lt;CR&gt;
-</code></pre>
+<div class="highlight"><pre><span></span>:nnoremap &lt;CR&gt; :vertical wincmd F&lt;CR&gt;
+</pre></div>
+
+
 <p>Simply put, we create a new mapping for the Vim&#8217;s normal (navigation) mode.
 When we hit <code>Enter</code> (or <code>&lt;CR&gt;</code>), Vim makes a vertical split and executes the
 window command <code>F</code>, which is essentially to open a file under cursor and

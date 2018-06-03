@@ -70,35 +70,38 @@ events occur? So did I. Please, welcome: <strong><a href="https://github.com/ale
 
 
 <p>Installation and configuration are dead&nbsp;simple:</p>
-<pre><code>:::shell
-pip install django-jabber
-</code></pre>
-<p>And then put this at your&nbsp;settings.py:</p>
-<pre><code>:::python
-INSTALLED_APPS = (
-    ...
-    'django_jabber',
-    ...
-)
+<div class="highlight"><pre><span></span>pip install django-jabber
+</pre></div>
 
-# Tweak settings below as necessary
-JABBER_HOST = 'jabber.domain.com'
-JABBER_USER = 'robot@domain.com'
-JABBER_PASSWORD = 'someStr0ngOne!1'
-JABBER_USE_TLS = True
-JABBER_USE_SSL = False
-JABBER_DRY_RUN = False  # Useful for testing
-</code></pre>
+
+<p>And then put this at your&nbsp;settings.py:</p>
+<div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">...</span>
+    <span class="s1">&#39;django_jabber&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+
+<span class="c1"># Tweak settings below as necessary</span>
+<span class="n">JABBER_HOST</span> <span class="o">=</span> <span class="s1">&#39;jabber.domain.com&#39;</span>
+<span class="n">JABBER_USER</span> <span class="o">=</span> <span class="s1">&#39;robot@domain.com&#39;</span>
+<span class="n">JABBER_PASSWORD</span> <span class="o">=</span> <span class="s1">&#39;someStr0ngOne!1&#39;</span>
+<span class="n">JABBER_USE_TLS</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">JABBER_USE_SSL</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">JABBER_DRY_RUN</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># Useful for testing</span>
+</pre></div>
+
+
 <p>And we&#8217;re&nbsp;done!</p>
 <p>Now let&#8217;s say you have an intranet forum. And you want to tell Bob and Alice
 that new topic is&nbsp;posted:</p>
-<pre><code>:::python
-from django_jabber import send_message
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_jabber</span> <span class="kn">import</span> <span class="n">send_message</span>
 
-recipients = ['bob', 'alice', ]
-topic = 'Hey there!'
-send_message(u'New topic: %s' % topic, recipients)
-</code></pre>
+<span class="n">recipients</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="s1">&#39;alice&#39;</span><span class="p">,</span> <span class="p">]</span>
+<span class="n">topic</span> <span class="o">=</span> <span class="s1">&#39;Hey there!&#39;</span>
+<span class="n">send_message</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;New topic: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">topic</span><span class="p">,</span> <span class="n">recipients</span><span class="p">)</span>
+</pre></div>
+
+
 <p>Notice we omit the <code>@domain</code> part in recipients&#8217; names. The package assumes you
 use it in-house, having one domain. It would be easy, though, to make it
 understand foreign domains (pull requests are&nbsp;welcome!).</p>
