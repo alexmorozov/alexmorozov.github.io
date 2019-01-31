@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="./theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/font-awesome.min.css">
+  <link href="https://morozov.ca/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="CTO with a CMO flavor Atom">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Alex Morozov" />
+<meta name="description" content="Sometimes, teams feel that agile user stories are not worth the extra work. I think I know the reason why." />
+<meta name="keywords" content="agile, scrum, user stories">
+<meta property="og:site_name" content="CTO with a CMO flavor"/>
+<meta property="og:title" content="5 Biggest Agile User Story Mistakes"/>
+<meta property="og:description" content="Sometimes, teams feel that agile user stories are not worth the extra work. I think I know the reason why."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./5-biggest-agile-user-story-mistakes.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-01-30 12:20:00+03:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="./author/alex-morozov.html">
+<meta property="article:section" content="Teamwork"/>
+<meta property="article:tag" content="agile"/>
+<meta property="article:tag" content="scrum"/>
+<meta property="article:tag" content="user stories"/>
+<meta property="og:image" content="/images/alex-morozov.jpg">  <title>5 Biggest Agile User Story Mistakes. CTO with a CMO flavor</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="/images/alex-morozov.jpg" alt="CTO with a CMO flavor" title="CTO with a CMO flavor">
+      </a>
+      <h1><a href=".">CTO with a CMO flavor</a></h1>
+      <p>Alex Morozov's blog</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/about-me.html#about-me">About&nbsp;me</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/djangoengineer" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-stack-overflow" href="http://stackoverflow.com/cv/django-developer" target="_blank"><i class="fa fa-stack-overflow"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/alexmorozov" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/alexmorozov" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-facebook" href="https://facebook.com/theveryalexmorozov" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="sc-rss" href="https://morozov.ca/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+
+<article>
+  <header>
+    <h1 id="5-biggest-agile-user-story-mistakes">5 Biggest Agile User Story&nbsp;Mistakes</h1>
+    <p>Posted on Wed 30 January 2019 in <a href="./category/teamwork.html">Teamwork</a></p>
+  </header>
+  <div>
+    
+
+<p>Sometimes, teams feel that agile user stories are not worth the extra work. I
+think I know the reason&nbsp;why.</p>
+
+
+<p><iframe
+width="560"
+height="315"
+src="https://www.youtube.com/embed/rTKK5mXCjj8"
+frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen>
+</iframe></p>
+<p>Today, I wanted to share the five biggest mistakes teams make when adopting
+user stories. Let’s recap what a user story is. It is a requirement expressed
+in user&#8217;s terms, and it usually has three&nbsp;parts:</p>
+<blockquote>
+<p>As some&nbsp;role,</p>
+<p>I want to be able to do&nbsp;something,</p>
+<p>So that I can achieve some&nbsp;goal</p>
+</blockquote>
+<p>The concept is brilliant. I would say it&#8217;s the best thing that has happened to
+requirements management in the last few decades. However,  user stories are so
+deceptively simple that it&#8217;s easy to get them wrong and ruin all the value. So
+here&#8217;s my top-5 of common mistakes teams&nbsp;make.</p>
+<h2 id="user-stories-developer-stories">User stories != developer&nbsp;stories</h2>
+<p>I am a firm believer that technical tasks and user stories don’t translate into
+each other. And they should&nbsp;not.</p>
+<p>What is the difference? A user story is something a customer wants to achieve,
+whereas technical tasks are the little things that need to be done before the
+customer can achieve his or her goal. In other words, you should not convert
+every request in the backlog into user stories. Instead, have a larger user
+story that encompasses several technical&nbsp;tasks.</p>
+<blockquote>
+<p>As a first-time&nbsp;buyer,</p>
+<p>I can visit the &#8220;About us&#8221;&nbsp;page</p>
+<p>So that I can learn more about the&nbsp;company</p>
+</blockquote>
+<p>Above is a typical example of a technical task wrapped with a user story. The
+reason those &#8220;stories&#8221; are so widespread is that they align well with the
+Behaviour-Driven Development paradigm.  Still, it&#8217;s a technical task, not a
+user story. Why? Let&#8217;s take a look at what the proper user story may look&nbsp;like:</p>
+<blockquote>
+<p>As a first-time&nbsp;buyer,</p>
+<p>I want to check if the company is&nbsp;credible</p>
+<p>so that I can be sure I won&#8217;t be&nbsp;fooled.</p>
+</blockquote>
+<p>See the difference? We don&#8217;t describe (or prescribe) implementation details,
+but instead, focus on what the user wants to achieve. This story is not
+actionable enough and needs to be split into multiple technical tasks. But most
+importantly, it acts as a guiding light, a clear test if we are moving in the
+right&nbsp;direction.</p>
+<h2 id="there-is-no-user">There is no&nbsp;“User&#8221;</h2>
+<p>It is easy to explain this mistake using an&nbsp;example:</p>
+<blockquote>
+<p>As a&nbsp;user,</p>
+<p>I want a “Contact us”&nbsp;page</p>
+<p>So that I can get in touch with company&nbsp;representatives</p>
+</blockquote>
+<p>What&#8217;s wrong with this story? Well, there are several things we could improve,
+but the main problem is that we have an abstract &#8220;user&#8221; here. The thing is,
+there is no just &#8220;user&#8221; or &#8220;customer&#8221; that uses your product. In fact, there
+are multiple segments, groups, personas - whatever you call it - with different
+goals, skill level, and&nbsp;preferences.</p>
+<p>It doesn&#8217;t make much sense to tailor the product for abstract people because
+you never know if you have succeeded. It&#8217;s much better to have a few personas
+defined and craft user stories so that they solve the problems of these
+personas. The best thing is, when you have a particular user segment to target,
+you start thinking of the requirements from a different perspective, through
+the eyes of a specific&nbsp;role.</p>
+<p>In our example, we can choose to target first-time buyers, and when we think of
+it that way, we realize the first-time buyers don&#8217;t probably need a generic
+&#8220;Contact Us&#8221; page. They might want, say, an online chat to help them check out.
+So a better version of the story would&nbsp;be:</p>
+<blockquote>
+<p>As a first-time&nbsp;user,</p>
+<p>I want someone to help with my&nbsp;order</p>
+<p>So that I can check out&nbsp;online</p>
+</blockquote>
+<h2 id="customer-doesnt-need-you">Customer doesn’t need&nbsp;you</h2>
+<p>Does that sound too strong? Yet, it is true. User stories should focus on
+customer&#8217;s goals and expected outcomes, not on details of the technical
+implementation. Sometimes, (okay, almost all the time), we forget that the
+customer doesn&#8217;t need our website, system, or mobile app. What they do need is
+a means of achieving their goal. Remember the saying that the customer doesn&#8217;t
+buy a drill in a hardware store? They buy a hole in the&nbsp;wall.</p>
+<p>Here is a good illustration of thinking too much of us instead of the&nbsp;customer:</p>
+<blockquote>
+<p>As a returning&nbsp;user</p>
+<p>I want to log&nbsp;in</p>
+<p>So that I can store a list of my&nbsp;searches</p>
+</blockquote>
+<p>Let&#8217;s be honest: the customer doesn&#8217;t want to log in at all. More than that,
+they may not want to store the list of searches in and of itself. What they
+want may be, for instance,&nbsp;this:</p>
+<blockquote>
+<p>As a returning&nbsp;user</p>
+<p>I want to access my searches&nbsp;quickly</p>
+<p>So that I don’t have to re-type&nbsp;them</p>
+</blockquote>
+<p>The second iteration of the story is not ideal, but much better. We now focus
+on the customer&#8217;s goal - save time not retyping the searches. Also, that may
+lead to a technical implementation 180 degrees opposite from the initial login&nbsp;functionality.</p>
+<h2 id="the-last-part-is-the-most-important-one">The last part is the most important&nbsp;one</h2>
+<p>It is a pervasive issue, especially if the team does not have all the people
+required to deliver value. When we create a story, we might focus too much on
+the first two parts - the role and description of the functionality required.
+So when it comes to the third part - why I need that - we are tempted to go
+&#8220;Well, let&#8217;s just put something in there. We already have perfect two parts&#8221;.
+The result may look like&nbsp;this:</p>
+<blockquote>
+<p>As a regular&nbsp;buyer</p>
+<p>I want to have a list of recent&nbsp;orders</p>
+<p>So that I can view&nbsp;them</p>
+</blockquote>
+<p>What&#8217;s the main problem with this story? It doesn’t explain to us why the
+customer wants the feature. Also, as you can imagine, it may well lead to the
+functionality that doesn’t satisfy the user’s need, albeit fully conforming to
+the&nbsp;story.</p>
+<p>How to fix that? Let’s modify it so that it contains a user-oriented goal. Like&nbsp;this:</p>
+<blockquote>
+<p>As a regular&nbsp;buyer</p>
+<p>I want to have a list of recent&nbsp;orders</p>
+<p>So that I can flag an issue with an&nbsp;order</p>
+</blockquote>
+<p>Now we know why the user wants the feature, so even if our technical
+implementation changes, we can quickly check if we are doing the right&nbsp;thing!</p>
+<h2 id="when-are-you-done">When are you&nbsp;done?</h2>
+<p>Almost every story has acceptance criteria - a set of conditions when the story
+is deemed completed. It’s very tempting to put technical exit criteria in the&nbsp;story:</p>
+<blockquote>
+<p>The code passes system&nbsp;tests</p>
+</blockquote>
+<p>However, if we take a look at previous mistakes, we know that a user story must
+be focused on the user to be successful. A user usually doesn’t care about
+system tests, repository check-ins and releases. A user story is not done until
+the user hits their&nbsp;goal.</p>
+<p>So what we need here&nbsp;is:</p>
+<h3 id="a-cross-functional-team">A cross-functional&nbsp;team</h3>
+<p>Our team should have all the people required to go from the idea to code to
+deployment to marketing to sales to measurements. Because, as we know,
+hand-offs between teams account for up to 90% of the lead time. Also, it’s a
+huge demotivator when you know that the customers will see the feature you just
+developed in half a&nbsp;year.</p>
+<h3 id="metrics">Metrics</h3>
+<p>Next, we need metrics to measure if we actually hit the goal. Everyone on the
+team should be aligned along those metrics. Otherwise, the story just falls
+apart to the traditional departmentalized “throwing stuff over the&nbsp;wall”.</p>
+<h3 id="ownership">Ownership</h3>
+<p>Finally, we need shared ownership, when all the team is responsible for the
+user story, or rather, for the successful outcome of the user&nbsp;story.</p>
+<p>Let’s look at a better example of the acceptance&nbsp;criterion.</p>
+<blockquote>
+<p>About us&#8221; page drop-off ratio is down at least&nbsp;30%.</p>
+</blockquote>
+<p>The difference is obvious. We have a crystal-clear metric, and regardless of
+what technical approach we choose, we can always determine if we have
+succeeded. Also, this prevents us from gold plating - perfecting the solution
+because of some perceived &#8220;quality&#8221;&nbsp;issues.</p>
+<p>Do you have a &#8220;good&#8221; example of an agile story mistake? Please share in the&nbsp;comments!</p>
+<p>We are actively hiring Python and Javascript developers who are, among other
+things, keen to agile practices. Want to join us in creating top-notch,
+award-winning cybersecurity solutions? Check the <a href="https://www.linkedin.com/jobs/search/?f_C=2760138&amp;locationId=OTHERS.worldwide">job postings</a>!</p>
+  </div>
+  <div>
+    <h4>Read on:</h4>
+    <ul>
+      <li>
+        <a href="./corporate-communications-ruin-teamwork.html">
+          How corporate communications ruin your teamwork and a way to fix&nbsp;that
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/agile.html">agile</a>
+      <a href="./tag/scrum.html">scrum</a>
+      <a href="./tag/user-stories.html">user stories</a>
+    </p>
+  </div>
+  <div class="center social-share">
+    <p>Like this article? Share it with your friends!</p>
+    <div class="addthis_native_toolbox"></div>
+    <div class="addthis_sharing_toolbox"></div>
+  </div>
+<h4>What do you think about it? Share your thoughts!</h4>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'alexmorozovgithubio';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</article>
+
+    <footer>
+      <p>&copy; Alex Morozov </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69605514-1', 'auto');
+  ga('send', 'pageview');
+</script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-563ca099f23dfb64" async="async"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "5 Biggest Agile User Story&nbsp;Mistakes",
+  "headline": "5 Biggest Agile User Story&nbsp;Mistakes",
+  "datePublished": "2019-01-30 12:20:00+03:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "Alex Morozov",
+    "url": "./author/alex-morozov.html"
+  },
+  "image": "/images/alex-morozov.jpg",
+  "url": "./5-biggest-agile-user-story-mistakes.html",
+  "description": "Sometimes, teams feel that agile user stories are not worth the extra work. I think I know the reason why."
+}
+</script></body>
+</html>
